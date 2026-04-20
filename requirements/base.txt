@@ -1,0 +1,11 @@
+# =============================================================================
+# Base requirements — dùng cho cả dev và prod
+# =============================================================================
+Django==5.2.*
+psycopg2-binary>=2.9,<3       # PostgreSQL driver
+python-decouple==3.8           # .env / env var management
+Pillow>=10.0,<11               # ImageField support
+django-filter>=24,<25          # Filtering cho products & blog
+djangorestframework>=3.15,<4   # DRF — API layer
+celery[redis]>=5.3,<6          # Async task queue
+django-redis>=5.4,<6           # Redis cache backend

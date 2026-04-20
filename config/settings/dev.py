@@ -1,0 +1,19 @@
+"""
+Development settings — ghi đè base.py.
+File này an toàn để commit, không chứa secrets.
+"""
+
+from .base import *  # noqa: F401, F403
+from decouple import config
+
+DEBUG = True
+
+ALLOWED_HOSTS = ["*"]
+
+# Django Debug Toolbar (cài ở phase sau)
+# INSTALLED_APPS += ["debug_toolbar"]
+# MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+# INTERNAL_IPS = ["127.0.0.1"]
+
+# Email console trong dev — không cần SMTP thật
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
