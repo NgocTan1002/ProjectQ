@@ -157,6 +157,11 @@
           </span>
         </a>
 
+        {# Resolve URLs một lần — fallback về '#' khi app chưa được wire vào urls.py #}
+        {% url 'blog:list'            as url_blog     %}
+        {% url 'contacts:contact'     as url_contact  %}
+        {% url 'orders:quote_request' as url_quote    %}
+
         {# Nav links — desktop #}
         <nav class="hidden md:flex items-center gap-1">
           <a href="/" class="text-slate-400 hover:text-white text-sm font-medium
@@ -173,14 +178,12 @@
                     px-3 py-2 rounded-lg hover:bg-slate-800 transition-all">
             Sản phẩm
           </a>
-          {# TODO: url 'blog:list' chưa được định nghĩa #}
-          <a href="#"
+          <a href="{{ url_blog|default:'#' }}"
              class="text-slate-400 hover:text-white text-sm font-medium
                     px-3 py-2 rounded-lg hover:bg-slate-800 transition-all">
             Blog
           </a>
-          {# TODO: url 'contacts:contact' chưa được định nghĩa #}
-          <a href="#"
+          <a href="{{ url_contact|default:'#' }}"
              class="text-slate-400 hover:text-white text-sm font-medium
                     px-3 py-2 rounded-lg hover:bg-slate-800 transition-all">
             Liên hệ
@@ -189,8 +192,7 @@
 
         {# CTA + Mobile toggle #}
         <div class="flex items-center gap-3">
-          {# TODO: url 'orders:quote_request' chưa được định nghĩa #}
-          <a href="#"
+          <a href="{{ url_quote|default:'#' }}"
              class="hidden sm:inline-flex items-center gap-1.5 bg-brand-600
                     hover:bg-brand-500 text-white text-xs font-semibold
                     px-4 py-2 rounded-lg transition-all duration-200">
@@ -234,21 +236,18 @@
                   px-3 py-2.5 rounded-lg hover:bg-slate-800 transition-all">
           Sản phẩm
         </a>
-        {# TODO: url 'blog:list' chưa được định nghĩa #}
-        <a href="#"
+        <a href="{{ url_blog|default:'#' }}"
            class="text-slate-300 hover:text-white text-sm font-medium
                   px-3 py-2.5 rounded-lg hover:bg-slate-800 transition-all">
           Blog
         </a>
-        {# TODO: url 'contacts:contact' chưa được định nghĩa #}
-        <a href="#"
+        <a href="{{ url_contact|default:'#' }}"
            class="text-slate-300 hover:text-white text-sm font-medium
                   px-3 py-2.5 rounded-lg hover:bg-slate-800 transition-all">
           Liên hệ
         </a>
         <div class="pt-2 mt-1 border-t border-slate-800">
-          {# TODO: url 'orders:quote_request' chưa được định nghĩa #}
-          <a href="#"
+          <a href="{{ url_quote|default:'#' }}"
              class="block text-center bg-brand-600 hover:bg-brand-500
                     text-white text-sm font-semibold px-4 py-2.5 rounded-lg
                     transition-all duration-200">
@@ -405,24 +404,22 @@
           <h3 class="text-white font-semibold text-sm uppercase tracking-widest mb-4">
             Hỗ trợ
           </h3>
+          {# Resolve thêm URL chỉ dùng trong footer #}
+          {% url 'contacts:demo_request' as url_demo %}
           <ul class="space-y-2.5">
-            {# TODO: url 'blog:list' chưa được định nghĩa #}
-            <li><a href="#"
+            <li><a href="{{ url_blog|default:'#' }}"
                    class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
               Blog kỹ thuật
             </a></li>
-            {# TODO: url 'contacts:contact' chưa được định nghĩa #}
-            <li><a href="#"
+            <li><a href="{{ url_contact|default:'#' }}"
                    class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
               Liên hệ
             </a></li>
-            {# TODO: url 'contacts:demo_request' chưa được định nghĩa #}
-            <li><a href="#"
+            <li><a href="{{ url_demo|default:'#' }}"
                    class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
               Đặt lịch demo
             </a></li>
-            {# TODO: url 'orders:quote_request' chưa được định nghĩa #}
-            <li><a href="#"
+            <li><a href="{{ url_quote|default:'#' }}"
                    class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
               Yêu cầu báo giá
             </a></li>
@@ -438,7 +435,7 @@
           © {% now "Y" %} {{ COMPANY_NAME|default:"IoTech" }}. All rights reserved.
         </p>
         <p class="text-slate-700 text-xs font-mono">
-          {{ COMPANY_ADDRESS }}
+          {{ COMPANY_ADDRESS|default:"" }}
         </p>
       </div>
 

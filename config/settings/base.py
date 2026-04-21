@@ -78,6 +78,9 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # Inject COMPANY_NAME, COMPANY_PHONE, COMPANY_EMAIL, COMPANY_ADDRESS
+                # vào mọi template mà không cần truyền thủ công trong từng view.
+                "apps.core.context_processors.company",
             ],
         },
     },
@@ -180,3 +183,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 # Default primary key field type
 # ---------------------------------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# ---------------------------------------------------------------------------
+# Company info — inject vào templates qua apps.core.context_processors.company
+# Đọc từ .env; nếu thiếu thì dùng giá trị mặc định để dev không bị lỗi.
+# ---------------------------------------------------------------------------
+COMPANY_NAME    = config("COMPANY_NAME",    default="IoTech")
+COMPANY_ADDRESS = config("COMPANY_ADDRESS", default="")
+COMPANY_PHONE   = config("COMPANY_PHONE",   default="")
+COMPANY_EMAIL   = config("COMPANY_EMAIL",   default="")
