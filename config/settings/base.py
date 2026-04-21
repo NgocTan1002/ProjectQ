@@ -197,3 +197,28 @@ COMPANY_EMAIL   = config("COMPANY_EMAIL",   default="")
 # Analytics (optional)
 # ---------------------------------------------------------------------------
 GA_TRACKING_ID = config("GA_TRACKING_ID", default="")
+
+
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # ── Project middleware ─────────────────────────────────────────────────
+    "apps.core.middleware.SEOMiddleware",
+    "apps.core.middleware.CartMiddleware",
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.StandardResultsPagination',
+    'PAGE_SIZE': 24,
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+    ],
+}

@@ -3,6 +3,22 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from apps.core.sitemaps import (
+    StaticViewSitemap,
+    ProductSitemap,
+    SolutionSitemap,
+    CategorySitemap,
+    BlogSitemap,
+)
+ 
+sitemaps = {
+    'static':     StaticViewSitemap,
+    'products':   ProductSitemap,
+    'solutions':  SolutionSitemap,
+    'categories': CategorySitemap,
+    'blog':       BlogSitemap,
+}
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("",         include("apps.core.urls",      namespace="core")),
