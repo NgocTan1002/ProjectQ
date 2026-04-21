@@ -29,11 +29,10 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="localhost,127.0.0.1", cast=Csv(
 INSTALLED_APPS = [
     "apps.customers",
 
-    "mptt",       # MPTT tree cho categories
+    "mptt",
     "taggit",
-    "imagekit",   # Image processing (thumbnail, WebP)
+    "imagekit",
 
-    # ── Project apps ──────────────────────────────────────────────────────────
     "apps.core",
     "apps.categories",
     "apps.products",
@@ -43,7 +42,6 @@ INSTALLED_APPS = [
     "apps.contacts",
     "apps.blog",
 
-    # ── Django built-ins ──────────────────────────────────────────────────────
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -69,7 +67,6 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        # Thư mục templates toàn cục ở root
         "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -78,9 +75,10 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                # Inject COMPANY_NAME, COMPANY_PHONE, COMPANY_EMAIL, COMPANY_ADDRESS
-                # vào mọi template mà không cần truyền thủ công trong từng view.
-                "apps.core.context_processors.company",
+                # Replaces the old `company` processor.
+                # Injects: COMPANY_*, SITE_URL, GA_TRACKING_ID,
+                # nav_solutions, solution_categories, nav_categories.
+                "apps.core.context_processors.global_context",
             ],
         },
     },
@@ -90,7 +88,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 
 # ---------------------------------------------------------------------------
-# Database — đọc từ .env
+# Database
 # ---------------------------------------------------------------------------
 DATABASES = {
     "default": {
@@ -106,7 +104,7 @@ DATABASES = {
 AUTH_USER_MODEL = 'customers.Customer'
 
 # ---------------------------------------------------------------------------
-# Cache — Redis qua django-redis (cài ở phase sau)
+# Cache — Redis qua django-redis
 # ---------------------------------------------------------------------------
 REDIS_URL = config("REDIS_URL", default="redis://localhost:6379/0")
 
@@ -128,12 +126,12 @@ CACHES = {
 # ---------------------------------------------------------------------------
 # Celery
 # ---------------------------------------------------------------------------
-CELERY_BROKER_URL       = config("CELERY_BROKER_URL",    default="redis://localhost:6379/0")
-CELERY_RESULT_BACKEND   = config("CELERY_RESULT_BACKEND", default="redis://localhost:6379/1")
-CELERY_ACCEPT_CONTENT   = ["json"]
-CELERY_TASK_SERIALIZER  = "json"
+CELERY_BROKER_URL        = config("CELERY_BROKER_URL",     default="redis://localhost:6379/0")
+CELERY_RESULT_BACKEND    = config("CELERY_RESULT_BACKEND", default="redis://localhost:6379/1")
+CELERY_ACCEPT_CONTENT    = ["json"]
+CELERY_TASK_SERIALIZER   = "json"
 CELERY_RESULT_SERIALIZER = "json"
-CELERY_TIMEZONE         = "Asia/Ho_Chi_Minh"
+CELERY_TIMEZONE          = "Asia/Ho_Chi_Minh"
 
 
 # ---------------------------------------------------------------------------
@@ -186,10 +184,16 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # ---------------------------------------------------------------------------
-# Company info — inject vào templates qua apps.core.context_processors.company
-# Đọc từ .env; nếu thiếu thì dùng giá trị mặc định để dev không bị lỗi.
+# Site & Company info
+# Đọc từ .env; dùng trong global_context processor và JSON-LD schema.
 # ---------------------------------------------------------------------------
+SITE_URL        = config("SITE_URL",        default="http://localhost:8000")
 COMPANY_NAME    = config("COMPANY_NAME",    default="IoTech")
 COMPANY_ADDRESS = config("COMPANY_ADDRESS", default="")
 COMPANY_PHONE   = config("COMPANY_PHONE",   default="")
 COMPANY_EMAIL   = config("COMPANY_EMAIL",   default="")
+
+# ---------------------------------------------------------------------------
+# Analytics (optional)
+# ---------------------------------------------------------------------------
+GA_TRACKING_ID = config("GA_TRACKING_ID", default="")
