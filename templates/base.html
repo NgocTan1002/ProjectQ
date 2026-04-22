@@ -4,210 +4,214 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  {# ── Preconnect fonts ── #}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  {# ── Tailwind config — PHẢI đặt TRƯỚC script tailwind ── #}
+  <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            display: ['Syne', 'sans-serif'],
-            sans:    ['DM Sans', 'sans-serif'],
-            mono:    ['JetBrains Mono', 'monospace'],
+            display: ['"Barlow Condensed"', 'sans-serif'],
+            sans:    ['"Space Grotesk"', 'sans-serif'],
+            mono:    ['"IBM Plex Mono"', 'monospace'],
           },
           colors: {
             brand: {
-              50:   '#eff6ff',
-              100:  '#dbeafe',
-              200:  '#bfdbfe',
-              300:  '#93c5fd',
-              400:  '#60a5fa',
-              500:  '#3b82f6',
-              600:  '#2563eb',
-              700:  '#1d4ed8',
-              800:  '#1e40af',
-              900:  '#1e3a8a',
-              950:  '#172554',
+              50:  '#edfcff',
+              100: '#d2f6ff',
+              200: '#aaf0ff',
+              300: '#6de8ff',
+              400: '#22d4f5',
+              500: '#06b8e0',
+              600: '#0891be',
+              700: '#0b739a',
+              800: '#125e7d',
+              900: '#134e69',
+              950: '#082f44',
             },
-            surface: {
-              50:  '#f8fafc',
-              100: '#f1f5f9',
-              800: '#1e293b',
-              900: '#0f172a',
-            },
+          },
+          animation: {
+            'fade-up':    'fadeUp .6s ease both',
+            'fade-in':    'fadeIn .4s ease both',
+            'shimmer':    'shimmer 2s linear infinite',
+            'ticker':     'ticker 20s linear infinite',
+          },
+          keyframes: {
+            fadeUp:  { from: { opacity: '0', transform: 'translateY(18px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+            fadeIn:  { from: { opacity: '0' }, to: { opacity: '1' } },
+            shimmer: { '0%': { backgroundPosition: '-200% 0' }, '100%': { backgroundPosition: '200% 0' } },
+            ticker:  { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
           },
         },
       },
     }
   </script>
-  <script src="https://cdn.tailwindcss.com"></script>
 
-  {# ── Custom styles — btn, card, badge, animations... ── #}
+
   <style type="text/tailwindcss">
     @layer base {
-      body {
-        @apply font-sans text-slate-700 bg-white antialiased;
-      }
+      body { @apply font-sans text-slate-300 bg-[#080d12] antialiased; }
+      ::selection { @apply bg-brand-500/30 text-brand-200; }
+      ::-webkit-scrollbar { @apply w-1.5; }
+      ::-webkit-scrollbar-track { @apply bg-slate-950; }
+      ::-webkit-scrollbar-thumb { @apply bg-slate-700 rounded-full; }
     }
 
     @layer components {
-      /* ── Buttons ── */
       .btn-primary {
-        @apply inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-500
-               text-white font-semibold px-6 py-3 rounded-xl
-               transition-all duration-200 shadow-lg shadow-brand-900/30;
+        @apply inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-400
+               text-slate-950 font-bold px-6 py-3 rounded-lg
+               transition-all duration-200 text-sm tracking-wide
+               shadow-lg shadow-brand-500/20 hover:shadow-brand-400/30;
       }
-      .btn-secondary {
-        @apply inline-flex items-center gap-2 border border-slate-300
-               hover:border-brand-400 text-slate-700 hover:text-brand-700
-               font-semibold px-6 py-3 rounded-xl bg-white
-               transition-all duration-200;
+      .btn-ghost {
+        @apply inline-flex items-center gap-2 border border-slate-700
+               hover:border-brand-500/60 text-slate-400 hover:text-brand-300
+               font-semibold px-6 py-3 rounded-lg bg-transparent
+               transition-all duration-200 text-sm;
       }
-      .btn-accent {
-        @apply inline-flex items-center gap-2 bg-white hover:bg-brand-50
-               text-brand-700 font-semibold px-6 py-3 rounded-xl
-               transition-all duration-200;
+      .nav-link {
+        @apply relative text-slate-400 hover:text-white text-sm font-medium
+               px-3 py-2 rounded-md transition-colors duration-150;
+      }
+      .nav-link::after {
+        content: '';
+        @apply absolute bottom-0 left-3 right-3 h-px bg-brand-400
+               scale-x-0 transition-transform duration-200 origin-left;
+      }
+      .nav-link:hover::after { @apply scale-x-100; }
+      .nav-link.active { @apply text-white; }
+      .nav-link.active::after { @apply scale-x-100; }
+
+      .section-label {
+        @apply font-mono text-[10px] uppercase tracking-[.2em] text-brand-400
+               flex items-center gap-2;
+      }
+      .section-label::before {
+        content: '';
+        @apply inline-block w-4 h-px bg-brand-400;
       }
 
-      /* ── Cards ── */
-      .card {
-        @apply bg-white rounded-2xl border border-slate-200
-               hover:border-brand-300 hover:shadow-xl hover:shadow-brand-100/40
-               transition-all duration-300 overflow-hidden;
+      .card-industrial {
+        @apply bg-slate-900/60 border border-slate-800 rounded-xl
+               hover:border-brand-500/40 hover:bg-slate-900
+               transition-all duration-300 backdrop-blur-sm;
       }
 
-      /* ── Section typography ── */
-      .section-title {
-        @apply font-display text-3xl lg:text-4xl font-bold text-slate-900 leading-tight;
-      }
-      .section-subtitle {
-        @apply text-slate-500 text-lg mt-2 max-w-2xl;
+      .noise-overlay {
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
       }
 
-      /* ── Text gradient ── */
-      .text-gradient {
-        @apply text-transparent bg-clip-text
-               bg-gradient-to-r from-brand-400 to-indigo-400;
-      }
-
-      /* ── Badges ── */
-      .badge-new {
-        @apply bg-brand-600 text-white text-[10px] font-bold
-               uppercase tracking-wider px-2 py-0.5 rounded-full;
-      }
-
-      /* ── Backgrounds ── */
-      .gradient-hero {
-        @apply bg-slate-950;
-      }
-
-      /* ── Grid pattern — dùng làm nền trang trí ── */
-      .grid-pattern {
+      .grid-bg {
         background-image:
-          linear-gradient(rgba(99,102,241,.08) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(99,102,241,.08) 1px, transparent 1px);
-        background-size: 48px 48px;
+          linear-gradient(rgba(6,184,224,.04) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(6,184,224,.04) 1px, transparent 1px);
+        background-size: 40px 40px;
       }
+
+      .tag {
+        @apply inline-flex items-center gap-1.5 text-[10px] font-mono font-medium
+               uppercase tracking-wider px-2.5 py-1 rounded border;
+      }
+      .tag-blue  { @apply bg-brand-950/60  text-brand-300  border-brand-800/60; }
+      .tag-green { @apply bg-emerald-950/60 text-emerald-300 border-emerald-800/60; }
+      .tag-amber { @apply bg-amber-950/60  text-amber-300  border-amber-800/60; }
+      .tag-red   { @apply bg-red-950/60    text-red-300    border-red-800/60; }
+
+      .msg-success { @apply bg-emerald-950/60 text-emerald-300 border border-emerald-800/60; }
+      .msg-error   { @apply bg-red-950/60    text-red-300    border border-red-800/60; }
+      .msg-warning { @apply bg-amber-950/60  text-amber-300  border border-amber-800/60; }
+      .msg-info    { @apply bg-brand-950/60  text-brand-300  border border-brand-700/60; }
     }
 
     @layer utilities {
-      /* ── Animations ── */
-      .animate-fade-in {
-        animation: fadeIn .6s ease both;
-      }
-      .animate-pulse-slow {
-        animation: pulse 3s cubic-bezier(0.4,0,0.6,1) infinite;
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(16px); }
-        to   { opacity: 1; transform: translateY(0); }
+      .text-display { @apply font-display font-bold uppercase tracking-tight; }
+      .clip-text {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
       }
     }
   </style>
 
-  <title>{% block title %}IoT Platform{% endblock %}</title>
+  <title>{% block title %}{{ COMPANY_NAME|default:"IoTech" }}{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}{% endblock %}">
   {% block jsonld %}{% endblock %}
 </head>
 
-<body class="min-h-screen flex flex-col">
-  <header class="sticky top-0 z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-800">
+<body class="min-h-screen flex flex-col overflow-x-hidden">
+
+  {# ── HEADER ─────────────────────────────────────────────────────────── #}
+  <header id="site-header"
+          class="fixed top-0 inset-x-0 z-50 transition-all duration-300"
+          style="background: rgba(8,13,18,0);">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
+      <div class="flex items-center justify-between h-16 lg:h-18">
 
         {# Logo #}
-        <a href="/" class="flex items-center gap-2.5 flex-shrink-0">
-          <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
-            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M13 10V3L4 14h7v7l9-11h-7z"/>
-            </svg>
+        <a href="/" class="flex items-center gap-3 flex-shrink-0 group">
+          <div class="relative w-8 h-8">
+            <div class="absolute inset-0 bg-brand-500 rounded-sm rotate-45 scale-75 opacity-20 group-hover:opacity-40 transition-opacity"></div>
+            <div class="relative w-8 h-8 border border-brand-500/70 rounded-sm flex items-center justify-center">
+              <svg class="w-4 h-4 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
           </div>
-          <span class="font-display font-bold text-white text-lg tracking-tight">
-            {{ COMPANY_NAME|default:"IoTech" }}
-          </span>
+          <div>
+            <span class="font-display font-bold text-white text-lg uppercase tracking-widest leading-none">
+              {{ COMPANY_NAME|default:"IoTech" }}
+            </span>
+            <span class="block font-mono text-[8px] text-brand-400 tracking-[.25em] uppercase leading-none">Industrial IoT</span>
+          </div>
         </a>
 
-        {# Resolve URLs một lần — fallback về '#' khi app chưa được wire vào urls.py #}
+        {# Nav — desktop #}
         {% url 'blog:list'            as url_blog     %}
         {% url 'contacts:contact'     as url_contact  %}
         {% url 'orders:quote_request' as url_quote    %}
 
-        {# Nav links — desktop #}
-        <nav class="hidden md:flex items-center gap-1">
-          <a href="/" class="text-slate-400 hover:text-white text-sm font-medium
-                             px-3 py-2 rounded-lg hover:bg-slate-800 transition-all">
-            Trang chủ
-          </a>
-          <a href="{% url 'solutions:list' %}"
-             class="text-slate-400 hover:text-white text-sm font-medium
-                    px-3 py-2 rounded-lg hover:bg-slate-800 transition-all">
-            Giải pháp
-          </a>
-          <a href="{% url 'products:list' %}"
-             class="text-slate-400 hover:text-white text-sm font-medium
-                    px-3 py-2 rounded-lg hover:bg-slate-800 transition-all">
-            Sản phẩm
-          </a>
-          <a href="{{ url_blog|default:'#' }}"
-             class="text-slate-400 hover:text-white text-sm font-medium
-                    px-3 py-2 rounded-lg hover:bg-slate-800 transition-all">
-            Blog
-          </a>
-          <a href="{{ url_contact|default:'#' }}"
-             class="text-slate-400 hover:text-white text-sm font-medium
-                    px-3 py-2 rounded-lg hover:bg-slate-800 transition-all">
-            Liên hệ
-          </a>
+        <nav class="hidden lg:flex items-center gap-1">
+          <a href="/"                         class="nav-link">Trang chủ</a>
+          <a href="{% url 'solutions:list' %}" class="nav-link">Giải pháp</a>
+          <a href="{% url 'products:list' %}"  class="nav-link">Sản phẩm</a>
+          <a href="{{ url_blog|default:'#' }}" class="nav-link">Blog</a>
+          <a href="{{ url_contact|default:'#' }}" class="nav-link">Liên hệ</a>
         </nav>
 
-        {# CTA + Mobile toggle #}
+        {# Right actions #}
         <div class="flex items-center gap-3">
+          {# Search icon #}
+          <a href="{% url 'core:search' %}"
+             class="hidden md:flex w-8 h-8 items-center justify-center rounded-md
+                    text-slate-500 hover:text-brand-400 hover:bg-slate-800/60
+                    transition-all duration-150">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0"/>
+            </svg>
+          </a>
+
           <a href="{{ url_quote|default:'#' }}"
-             class="hidden sm:inline-flex items-center gap-1.5 bg-brand-600
-                    hover:bg-brand-500 text-white text-xs font-semibold
-                    px-4 py-2 rounded-lg transition-all duration-200">
+             class="hidden sm:inline-flex items-center gap-2 border border-brand-500/60
+                    hover:bg-brand-500 hover:border-brand-500
+                    text-brand-400 hover:text-slate-950
+                    font-bold text-xs px-4 py-2 rounded-md
+                    transition-all duration-200 uppercase tracking-wider">
             Báo giá
           </a>
 
-          {# Mobile menu button #}
+          {# Mobile toggle #}
           <button id="mobile-menu-btn" type="button"
-                  class="md:hidden text-slate-400 hover:text-white p-2
-                         rounded-lg hover:bg-slate-800 transition-all"
-                  aria-label="Mở menu">
-            <svg id="icon-menu" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-            <svg id="icon-close" class="w-5 h-5 hidden" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
+                  class="lg:hidden w-8 h-8 flex flex-col items-center justify-center gap-1.5
+                         rounded-md hover:bg-slate-800/60 transition-colors"
+                  aria-label="Menu">
+            <span class="menu-bar w-5 h-0.5 bg-slate-400 transition-all duration-300 origin-center"></span>
+            <span class="menu-bar w-5 h-0.5 bg-slate-400 transition-all duration-300"></span>
+            <span class="menu-bar w-5 h-0.5 bg-slate-400 transition-all duration-300 origin-center"></span>
           </button>
         </div>
 
@@ -215,38 +219,17 @@
     </div>
 
     {# Mobile menu #}
-    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 bg-slate-950">
-      <nav class="max-w-7xl mx-auto px-4 py-3 flex flex-col gap-1">
-        <a href="/"
-           class="text-slate-300 hover:text-white text-sm font-medium
-                  px-3 py-2.5 rounded-lg hover:bg-slate-800 transition-all">
-          Trang chủ
-        </a>
-        <a href="{% url 'solutions:list' %}"
-           class="text-slate-300 hover:text-white text-sm font-medium
-                  px-3 py-2.5 rounded-lg hover:bg-slate-800 transition-all">
-          Giải pháp
-        </a>
-        <a href="{% url 'products:list' %}"
-           class="text-slate-300 hover:text-white text-sm font-medium
-                  px-3 py-2.5 rounded-lg hover:bg-slate-800 transition-all">
-          Sản phẩm
-        </a>
-        <a href="{{ url_blog|default:'#' }}"
-           class="text-slate-300 hover:text-white text-sm font-medium
-                  px-3 py-2.5 rounded-lg hover:bg-slate-800 transition-all">
-          Blog
-        </a>
-        <a href="{{ url_contact|default:'#' }}"
-           class="text-slate-300 hover:text-white text-sm font-medium
-                  px-3 py-2.5 rounded-lg hover:bg-slate-800 transition-all">
-          Liên hệ
-        </a>
-        <div class="pt-2 mt-1 border-t border-slate-800">
-          <a href="{{ url_quote|default:'#' }}"
-             class="block text-center bg-brand-600 hover:bg-brand-500
-                    text-white text-sm font-semibold px-4 py-2.5 rounded-lg
-                    transition-all duration-200">
+    <div id="mobile-menu"
+         class="lg:hidden overflow-hidden transition-all duration-300 max-h-0"
+         style="background: rgba(8,13,18,.97); border-top: 1px solid rgba(255,255,255,.06);">
+      <nav class="max-w-7xl mx-auto px-4 py-4 flex flex-col gap-1">
+        <a href="/"                             class="nav-link text-base py-3 border-b border-slate-800/60">Trang chủ</a>
+        <a href="{% url 'solutions:list' %}"    class="nav-link text-base py-3 border-b border-slate-800/60">Giải pháp</a>
+        <a href="{% url 'products:list' %}"     class="nav-link text-base py-3 border-b border-slate-800/60">Sản phẩm</a>
+        <a href="{{ url_blog|default:'#' }}"    class="nav-link text-base py-3 border-b border-slate-800/60">Blog</a>
+        <a href="{{ url_contact|default:'#' }}" class="nav-link text-base py-3 border-b border-slate-800/60">Liên hệ</a>
+        <div class="pt-3">
+          <a href="{{ url_quote|default:'#' }}" class="btn-primary w-full justify-center">
             Yêu cầu báo giá
           </a>
         </div>
@@ -254,210 +237,245 @@
     </div>
   </header>
 
+  {# ── MESSAGES ────────────────────────────────────────────────────────── #}
   {% if messages %}
-  <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-4 space-y-2">
+  <div class="fixed top-20 right-4 z-40 flex flex-col gap-2 max-w-sm w-full">
     {% for msg in messages %}
-    <div class="flex items-start gap-3 px-4 py-3 rounded-xl text-sm font-medium
-      {% if msg.tags == 'error' %}bg-red-50 text-red-700 border border-red-200
-      {% elif msg.tags == 'success' %}bg-emerald-50 text-emerald-700 border border-emerald-200
-      {% elif msg.tags == 'warning' %}bg-amber-50 text-amber-700 border border-amber-200
-      {% else %}bg-brand-50 text-brand-700 border border-brand-200{% endif %}">
-      <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24"
-           stroke="currentColor" stroke-width="2">
+    <div class="flex items-start gap-3 px-4 py-3 rounded-lg text-sm font-medium backdrop-blur-sm
+      {% if msg.tags == 'error' %}msg-error
+      {% elif msg.tags == 'success' %}msg-success
+      {% elif msg.tags == 'warning' %}msg-warning
+      {% else %}msg-info{% endif %}
+      animate-fade-up shadow-2xl"
+         role="alert">
+      <svg class="w-4 h-4 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         {% if msg.tags == 'error' %}
-        <path stroke-linecap="round" stroke-linejoin="round"
-              d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
         {% elif msg.tags == 'success' %}
         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
         {% else %}
-        <path stroke-linecap="round" stroke-linejoin="round"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
         {% endif %}
       </svg>
-      <span>{{ msg }}</span>
+      <span class="flex-1">{{ msg }}</span>
+      <button onclick="this.parentElement.remove()" class="opacity-50 hover:opacity-100 transition-opacity">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
     </div>
     {% endfor %}
   </div>
   {% endif %}
 
-
-  <main class="flex-1">
+  {# ── MAIN ────────────────────────────────────────────────────────────── #}
+  <main class="flex-1 pt-16">
     {% block content %}{% endblock %}
   </main>
 
-  <footer class="bg-slate-950 border-t border-slate-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+  {# ── FOOTER ──────────────────────────────────────────────────────────── #}
+  <footer class="bg-[#050a0f] border-t border-slate-800/60 mt-24">
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+    {# Top ticker #}
+    <div class="border-b border-slate-800/60 overflow-hidden py-2.5 bg-brand-950/20">
+      <div class="flex whitespace-nowrap animate-ticker">
+        <span class="font-mono text-[10px] text-brand-500/60 uppercase tracking-[.3em] px-8">
+          Industrial IoT &nbsp;·&nbsp; Smart Agriculture &nbsp;·&nbsp; Factory Automation &nbsp;·&nbsp; Energy Management &nbsp;·&nbsp; Remote Monitoring &nbsp;·&nbsp; Predictive Maintenance
+        </span>
+        <span class="font-mono text-[10px] text-brand-500/60 uppercase tracking-[.3em] px-8">
+          Industrial IoT &nbsp;·&nbsp; Smart Agriculture &nbsp;·&nbsp; Factory Automation &nbsp;·&nbsp; Energy Management &nbsp;·&nbsp; Remote Monitoring &nbsp;·&nbsp; Predictive Maintenance
+        </span>
+        <span class="font-mono text-[10px] text-brand-500/60 uppercase tracking-[.3em] px-8">
+          Industrial IoT &nbsp;·&nbsp; Smart Agriculture &nbsp;·&nbsp; Factory Automation &nbsp;·&nbsp; Energy Management &nbsp;·&nbsp; Remote Monitoring &nbsp;·&nbsp; Predictive Maintenance
+        </span>
+        <span class="font-mono text-[10px] text-brand-500/60 uppercase tracking-[.3em] px-8">
+          Industrial IoT &nbsp;·&nbsp; Smart Agriculture &nbsp;·&nbsp; Factory Automation &nbsp;·&nbsp; Energy Management &nbsp;·&nbsp; Remote Monitoring &nbsp;·&nbsp; Predictive Maintenance
+        </span>
+      </div>
+    </div>
 
-        {# Cột 1: Thông tin công ty #}
-        <div class="lg:col-span-1">
-          <div class="flex items-center gap-2.5 mb-4">
-            <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
-              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24"
-                   stroke="currentColor" stroke-width="2.5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-14">
+
+        {# Brand col #}
+        <div class="md:col-span-4">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-8 h-8 border border-brand-500/70 rounded-sm flex items-center justify-center">
+              <svg class="w-4 h-4 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
               </svg>
             </div>
-            <span class="font-display font-bold text-white text-lg">
-              {{ COMPANY_NAME|default:"IoTech" }}
-            </span>
+            <div>
+              <span class="font-display font-bold text-white text-lg uppercase tracking-widest block leading-none">{{ COMPANY_NAME|default:"IoTech" }}</span>
+              <span class="font-mono text-[8px] text-brand-400 tracking-[.25em] uppercase">Industrial IoT</span>
+            </div>
           </div>
-          <p class="text-slate-500 text-sm leading-relaxed mb-5">
-            Giải pháp IoT công nghiệp và tự động hoá cho nông nghiệp, nhà máy và quản lý năng lượng.
+          <p class="text-slate-500 text-sm leading-relaxed mb-6 max-w-xs">
+            Hệ sinh thái thiết bị IoT công nghiệp và giải pháp tự động hoá thông minh cho nông nghiệp, nhà máy và quản lý năng lượng.
           </p>
-          <div class="space-y-2">
+          <div class="space-y-2.5">
             {% if COMPANY_PHONE %}
-            <a href="tel:{{ COMPANY_PHONE }}"
-               class="flex items-center gap-2 text-slate-500 hover:text-slate-300
-                      text-sm transition-colors">
-              <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24"
-                   stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-              </svg>
+            <a href="tel:{{ COMPANY_PHONE }}" class="flex items-center gap-2.5 text-slate-500 hover:text-brand-400 text-sm transition-colors group">
+              <span class="w-7 h-7 rounded-md border border-slate-800 group-hover:border-brand-700/50 flex items-center justify-center flex-shrink-0 transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                </svg>
+              </span>
               {{ COMPANY_PHONE }}
             </a>
             {% endif %}
             {% if COMPANY_EMAIL %}
-            <a href="mailto:{{ COMPANY_EMAIL }}"
-               class="flex items-center gap-2 text-slate-500 hover:text-slate-300
-                      text-sm transition-colors">
-              <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24"
-                   stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-              </svg>
+            <a href="mailto:{{ COMPANY_EMAIL }}" class="flex items-center gap-2.5 text-slate-500 hover:text-brand-400 text-sm transition-colors group">
+              <span class="w-7 h-7 rounded-md border border-slate-800 group-hover:border-brand-700/50 flex items-center justify-center flex-shrink-0 transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </span>
               {{ COMPANY_EMAIL }}
             </a>
             {% endif %}
           </div>
         </div>
 
-        {# Cột 2: Giải pháp #}
-        <div>
-          <h3 class="text-white font-semibold text-sm uppercase tracking-widest mb-4">
-            Giải pháp
-          </h3>
-          <ul class="space-y-2.5">
-            <li><a href="{% url 'solutions:list' %}"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              Tất cả giải pháp
-            </a></li>
-            <li><a href="{% url 'solutions:list' %}?cat=agriculture"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              Nông nghiệp thông minh
-            </a></li>
-            <li><a href="{% url 'solutions:list' %}?cat=factory"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              Tự động hoá nhà máy
-            </a></li>
-            <li><a href="{% url 'solutions:list' %}?cat=energy"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              Quản lý năng lượng
-            </a></li>
+        {# Links #}
+        <div class="md:col-span-2">
+          <h4 class="font-mono text-[10px] uppercase tracking-[.2em] text-slate-500 mb-5">Giải pháp</h4>
+          <ul class="space-y-3">
+            <li><a href="{% url 'solutions:list' %}" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">Tất cả giải pháp</a></li>
+            <li><a href="{% url 'solutions:list' %}?cat=agriculture" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">Nông nghiệp</a></li>
+            <li><a href="{% url 'solutions:list' %}?cat=factory" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">Nhà máy</a></li>
+            <li><a href="{% url 'solutions:list' %}?cat=energy" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">Năng lượng</a></li>
           </ul>
         </div>
 
-        {# Cột 3: Sản phẩm #}
-        <div>
-          <h3 class="text-white font-semibold text-sm uppercase tracking-widest mb-4">
-            Sản phẩm
-          </h3>
-          <ul class="space-y-2.5">
-            <li><a href="{% url 'products:list' %}"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              Tất cả sản phẩm
-            </a></li>
-            <li><a href="{% url 'products:list' %}?cat=sensor"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              Cảm biến công nghiệp
-            </a></li>
-            <li><a href="{% url 'products:list' %}?cat=gateway"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              Gateway & Datalogger
-            </a></li>
-            <li><a href="{% url 'products:list' %}?cat=plc"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              PLC & Controller
-            </a></li>
+        <div class="md:col-span-2">
+          <h4 class="font-mono text-[10px] uppercase tracking-[.2em] text-slate-500 mb-5">Sản phẩm</h4>
+          <ul class="space-y-3">
+            <li><a href="{% url 'products:list' %}" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">Tất cả</a></li>
+            <li><a href="{% url 'products:list' %}?cat=sensor" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">Cảm biến</a></li>
+            <li><a href="{% url 'products:list' %}?cat=gateway" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">Gateway</a></li>
+            <li><a href="{% url 'products:list' %}?cat=plc" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">PLC & HMI</a></li>
           </ul>
         </div>
 
-        {# Cột 4: Hỗ trợ #}
-        <div>
-          <h3 class="text-white font-semibold text-sm uppercase tracking-widest mb-4">
-            Hỗ trợ
-          </h3>
-          {# Resolve thêm URL chỉ dùng trong footer #}
+        <div class="md:col-span-2">
+          <h4 class="font-mono text-[10px] uppercase tracking-[.2em] text-slate-500 mb-5">Hỗ trợ</h4>
           {% url 'contacts:demo_request' as url_demo %}
-          <ul class="space-y-2.5">
-            <li><a href="{{ url_blog|default:'#' }}"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              Blog kỹ thuật
-            </a></li>
-            <li><a href="{{ url_contact|default:'#' }}"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              Liên hệ
-            </a></li>
-            <li><a href="{{ url_demo|default:'#' }}"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              Đặt lịch demo
-            </a></li>
-            <li><a href="{{ url_quote|default:'#' }}"
-                   class="text-slate-500 hover:text-slate-300 text-sm transition-colors">
-              Yêu cầu báo giá
-            </a></li>
+          <ul class="space-y-3">
+            <li><a href="{{ url_blog|default:'#' }}" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">Blog kỹ thuật</a></li>
+            <li><a href="{{ url_contact|default:'#' }}" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">Liên hệ</a></li>
+            <li><a href="{{ url_demo|default:'#' }}" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">Đặt lịch demo</a></li>
+            <li><a href="{{ url_quote|default:'#' }}" class="text-slate-500 hover:text-brand-400 text-sm transition-colors">Yêu cầu báo giá</a></li>
           </ul>
+        </div>
+
+        {# CTA col #}
+        <div class="md:col-span-2">
+          <h4 class="font-mono text-[10px] uppercase tracking-[.2em] text-slate-500 mb-5">Bắt đầu</h4>
+          <div class="space-y-3">
+            <a href="{{ url_quote|default:'#' }}" class="btn-primary w-full justify-center text-xs">
+              Báo giá ngay
+            </a>
+            <a href="{{ url_demo|default:'#' }}" class="btn-ghost w-full justify-center text-xs">
+              Đặt demo
+            </a>
+          </div>
+          <div class="mt-6 p-3 rounded-lg border border-slate-800 bg-slate-900/40">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+              <span class="font-mono text-[10px] text-green-400 uppercase tracking-wider">Hỗ trợ 24/7</span>
+            </div>
+            <p class="text-slate-600 text-xs">Đội kỹ thuật sẵn sàng hỗ trợ mọi lúc</p>
+          </div>
         </div>
 
       </div>
 
       {# Bottom bar #}
-      <div class="mt-12 pt-8 border-t border-slate-800
-                  flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p class="text-slate-600 text-xs">
-          © {% now "Y" %} {{ COMPANY_NAME|default:"IoTech" }}. All rights reserved.
+      <div class="pt-8 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-slate-700 text-xs font-mono">
+          © {% now "Y" %} {{ COMPANY_NAME|default:"IoTech" }} &nbsp;·&nbsp; All rights reserved
         </p>
         <p class="text-slate-700 text-xs font-mono">
           {{ COMPANY_ADDRESS|default:"" }}
         </p>
       </div>
-
     </div>
   </footer>
 
   <script>
-    // Mobile menu toggle
+  (function () {
+    // ── Sticky header scroll effect ──────────────────────────────
+    const header = document.getElementById('site-header');
+    let lastY = 0;
+    const onScroll = () => {
+      const y = window.scrollY;
+      if (y > 40) {
+        header.style.background = 'rgba(8,13,18,.96)';
+        header.style.borderBottom = '1px solid rgba(255,255,255,.06)';
+        header.style.backdropFilter = 'blur(16px)';
+      } else {
+        header.style.background = 'rgba(8,13,18,0)';
+        header.style.borderBottom = 'none';
+        header.style.backdropFilter = 'none';
+      }
+      lastY = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // ── Mobile menu ──────────────────────────────────────────────
     const btn  = document.getElementById('mobile-menu-btn');
     const menu = document.getElementById('mobile-menu');
-    const iconMenu  = document.getElementById('icon-menu');
-    const iconClose = document.getElementById('icon-close');
+    const bars = btn.querySelectorAll('.menu-bar');
+    let open = false;
 
     btn.addEventListener('click', () => {
-      const isOpen = !menu.classList.contains('hidden');
-      menu.classList.toggle('hidden', isOpen);
-      iconMenu.classList.toggle('hidden', !isOpen);
-      iconClose.classList.toggle('hidden', isOpen);
+      open = !open;
+      menu.style.maxHeight = open ? menu.scrollHeight + 'px' : '0';
+      bars[0].style.transform = open ? 'translateY(7px) rotate(45deg)' : '';
+      bars[1].style.opacity   = open ? '0' : '1';
+      bars[2].style.transform = open ? 'translateY(-7px) rotate(-45deg)' : '';
     });
 
-    // Scroll reveal cho các element có data-animate
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-          observer.unobserve(entry.target);
+    // ── Scroll reveal ─────────────────────────────────────────────
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('animate-fade-up');
+          e.target.style.opacity = '1';
+          io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.08 });
 
-    document.querySelectorAll('[data-animate]').forEach(el => {
+    document.querySelectorAll('[data-reveal]').forEach(el => {
       el.style.opacity = '0';
-      el.style.transform = 'translateY(20px)';
-      el.style.transition = 'opacity .5s ease, transform .5s ease';
-      observer.observe(el);
+      el.style.transition = 'opacity .6s ease, transform .6s ease';
+      io.observe(el);
     });
+
+    // Fallback: nếu element đã trong viewport khi load
+    setTimeout(() => {
+      document.querySelectorAll('[data-reveal]').forEach(el => {
+        if (el.style.opacity === '0') {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight) {
+            el.classList.add('animate-fade-up');
+            el.style.opacity = '1';
+          }
+        }
+      });
+    }, 100);
+    // ── Auto-dismiss flash messages ───────────────────────────────
+    setTimeout(() => {
+      document.querySelectorAll('[role="alert"]').forEach(el => {
+        el.style.transition = 'opacity .4s ease';
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 400);
+      });
+    }, 4000);
+  })();
   </script>
 
 </body>

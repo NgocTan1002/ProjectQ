@@ -13,262 +13,263 @@
   "name": "{{ COMPANY_NAME }}",
   "url": "{{ SITE_URL }}",
   "telephone": "{{ COMPANY_PHONE }}",
-  "email": "{{ COMPANY_EMAIL }}",
-  "address": {
-    "@type": "PostalAddress",
-    "addressLocality": "{{ COMPANY_ADDRESS }}"
-  },
-  "sameAs": []
+  "email": "{{ COMPANY_EMAIL }}"
 }
 </script>
 {% endblock %}
 
 {% block content %}
 
-<section class="relative min-h-[92vh] flex items-center bg-slate-950 overflow-hidden">
+{# ══════════════════════════════════════════════════════════════════HERO══════════════════════════════════════════════════════════════════ #}
+<section class="relative min-h-screen flex items-center overflow-hidden">
 
-  {# Nền lưới kỹ thuật #}
-  <div class="absolute inset-0"
-       style="background-image:
-         linear-gradient(rgba(99,102,241,.06) 1px, transparent 1px),
-         linear-gradient(90deg, rgba(99,102,241,.06) 1px, transparent 1px);
-       background-size: 48px 48px;">
-  </div>
+  {# Background layers #}
+  <div class="absolute inset-0 grid-bg"></div>
+  <div class="absolute inset-0 noise-overlay"></div>
 
-  {# Ánh sáng nền ambient #}
-  <div class="absolute -top-40 -left-40 w-[600px] h-[600px]
-              bg-brand-700/20 rounded-full blur-[120px] pointer-events-none"></div>
-  <div class="absolute bottom-0 right-0 w-[400px] h-[400px]
-              bg-indigo-700/10 rounded-full blur-[100px] pointer-events-none"></div>
+  {# Radial glow — top left #}
+  <div class="absolute -top-1/4 -left-1/4 w-[900px] h-[900px] rounded-full pointer-events-none"
+       style="background: radial-gradient(circle, rgba(6,184,224,.07) 0%, transparent 65%);"></div>
+  {# Radial glow — bottom right #}
+  <div class="absolute -bottom-1/4 -right-1/4 w-[700px] h-[700px] rounded-full pointer-events-none"
+       style="background: radial-gradient(circle, rgba(6,184,224,.04) 0%, transparent 65%);"></div>
+
+  {# Diagonal accent line #}
+  <div class="absolute top-0 right-0 w-px h-full opacity-10"
+       style="background: linear-gradient(to bottom, transparent, rgba(6,184,224,1) 40%, rgba(6,184,224,1) 60%, transparent);"></div>
 
   <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-28 w-full">
-    <div class="grid lg:grid-cols-[1fr_440px] xl:grid-cols-[1fr_500px] gap-12 xl:gap-20 items-center">
+    <div class="grid lg:grid-cols-[1fr_480px] gap-16 xl:gap-24 items-center">
 
-      {# ── Cột trái: Nội dung chính ── #}
+      {# ── Left: Hero copy ── #}
       <div>
 
-        {# Badge trạng thái live #}
-        <div class="inline-flex items-center gap-2.5 border border-brand-700/60
-                    bg-brand-950/70 text-brand-300 text-xs font-mono
-                    tracking-wide px-4 py-2 rounded-full mb-8 backdrop-blur-sm">
+        {# Status badge #}
+        <div class="inline-flex items-center gap-3 border border-brand-700/40
+                    bg-brand-950/40 px-4 py-2 rounded-full mb-8 backdrop-blur-sm">
           <span class="relative flex h-2 w-2">
-            <span class="animate-ping absolute inline-flex h-full w-full
-                         rounded-full bg-green-400 opacity-75"></span>
-            <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-400"></span>
           </span>
-          INDUSTRIAL IoT &amp; AUTOMATION
+          <span class="font-mono text-[10px] uppercase tracking-[.2em] text-brand-400">
+            Industrial IoT &nbsp;/&nbsp; Edge Computing &nbsp;/&nbsp; Automation
+          </span>
         </div>
 
-        <h1 class="font-display font-extrabold text-white leading-[1.08] tracking-tight mb-6">
-          <span class="block text-5xl lg:text-[3.75rem] xl:text-[4.25rem]">Kết nối</span>
-          <span class="block text-5xl lg:text-[3.75rem] xl:text-[4.25rem] text-transparent
-                       bg-clip-text bg-gradient-to-r from-brand-400 to-indigo-400">
-            thế giới công nghiệp
-          </span>
-          <span class="block text-5xl lg:text-[3.75rem] xl:text-[4.25rem]">của bạn.</span>
+        {# Headline #}
+        <h1 class="font-display font-bold uppercase leading-[.95] tracking-tighter mb-7">
+          <span class="block text-[clamp(3.5rem,8vw,6.5rem)] text-white">Kết nối</span>
+          <span class="block text-[clamp(3.5rem,8vw,6.5rem)] text-white">thế giới</span>
+          <span class="block text-[clamp(3.5rem,8vw,6.5rem)] text-white">công nghiệp.</span>
         </h1>
 
-        <p class="text-slate-400 text-lg leading-relaxed max-w-xl mb-10">
-          Từ nhà kính thông minh đến dashboard nhà máy — giải pháp IoT đầu cuối
-          với cảm biến công nghiệp, gateway và hệ thống tự động hoá được xây dựng
-          để mở rộng quy mô.
+        <p class="text-slate-400 text-lg leading-relaxed max-w-lg mb-10">
+          Từ nhà kính thông minh đến dashboard nhà máy — hệ sinh thái IoT
+          đầu cuối với cảm biến công nghiệp, gateway và hệ thống tự động hoá
+          được xây dựng để mở rộng quy mô không giới hạn.
         </p>
 
-        {# CTA Buttons #}
-        <div class="flex flex-wrap gap-3 mb-14">
-          <a href="{% url 'solutions:list' %}"
-             class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-500
-                    text-white font-semibold text-sm px-6 py-3.5 rounded-xl
-                    transition-all duration-200 shadow-lg shadow-brand-900/50">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        {# CTA row #}
+        <div class="flex flex-wrap gap-3 mb-16">
+          <a href="{% url 'solutions:list' %}" class="btn-primary">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
             </svg>
             Khám phá giải pháp
           </a>
-          {# TODO: url 'orders:quote_request' chưa được định nghĩa #}
-          <a href="#"
-             class="inline-flex items-center gap-2 border border-slate-700
-                    hover:border-slate-500 text-slate-300 hover:text-white
-                    font-semibold text-sm px-6 py-3.5 rounded-xl
-                    transition-all duration-200 bg-slate-900/50 backdrop-blur-sm">
+          {% url 'orders:quote_request' as url_quote %}
+          <a href="{{ url_quote|default:'#' }}" class="btn-ghost">
             Yêu cầu báo giá
           </a>
         </div>
 
-        {# Thống kê — 3 cột chia đường kẻ #}
-        <div class="grid grid-cols-3 divide-x divide-slate-800 border-t border-slate-800 pt-8">
-          <div class="pr-6">
-            <p class="text-3xl font-display font-bold text-white tracking-tight">
-              {{ stats.products_count|intcomma }}+
+        {# Stats row #}
+        <div class="grid grid-cols-3 gap-px border border-slate-800 rounded-xl overflow-hidden bg-slate-800">
+          <div class="bg-[#080d12] px-5 py-5">
+            <p class="font-display font-bold uppercase text-3xl text-white leading-none">
+              {{ stats.products_count|default:"500" }}+
             </p>
-            <p class="text-slate-500 text-xs uppercase tracking-widest mt-1">Sản phẩm</p>
+            <p class="font-mono text-[10px] uppercase tracking-widest text-slate-600 mt-2">Sản phẩm</p>
           </div>
-          <div class="px-6">
-            <p class="text-3xl font-display font-bold text-white tracking-tight">
-              {{ stats.solutions_count }}+
+          <div class="bg-[#080d12] px-5 py-5">
+            <p class="font-display font-bold uppercase text-3xl text-white leading-none">
+              {{ stats.solutions_count|default:"30" }}+
             </p>
-            <p class="text-slate-500 text-xs uppercase tracking-widest mt-1">Giải pháp</p>
+            <p class="font-mono text-[10px] uppercase tracking-widest text-slate-600 mt-2">Giải pháp</p>
           </div>
-          <div class="pl-6">
-            <p class="text-3xl font-display font-bold text-white tracking-tight">500+</p>
-            <p class="text-slate-500 text-xs uppercase tracking-widest mt-1">Dự án triển khai</p>
+          <div class="bg-[#080d12] px-5 py-5">
+            <p class="font-display font-bold uppercase text-3xl text-white leading-none">500+</p>
+            <p class="font-mono text-[10px] uppercase tracking-widest text-slate-600 mt-2">Dự án</p>
           </div>
         </div>
       </div>
 
-      {# ── Cột phải: IoT Architecture Card ── #}
-      <div class="hidden lg:block">
-        <div class="relative">
-          {# Viền gradient nhẹ #}
-          <div class="absolute -inset-px rounded-2xl bg-gradient-to-b
-                      from-brand-700/40 to-transparent pointer-events-none"></div>
+      {# ── Right: Architecture diagram ── #}
+      <div class="hidden lg:block relative" data-reveal>
+        {# Glow behind card #}
+        <div class="absolute inset-8 rounded-2xl opacity-20 blur-3xl"
+             style="background: radial-gradient(ellipse, rgba(6,184,224,.6) 0%, transparent 70%);"></div>
 
-          <div class="relative bg-slate-900 border border-slate-800 rounded-2xl
-                      overflow-hidden shadow-2xl shadow-slate-950/80">
+        <div class="relative border border-slate-700/60 rounded-2xl overflow-hidden backdrop-blur-sm"
+             style="background: rgba(10,16,22,.85);">
 
-            {# Thanh tiêu đề giả terminal #}
-            <div class="flex items-center gap-1.5 px-4 py-3 border-b border-slate-800 bg-slate-950/60">
-              <span class="w-2.5 h-2.5 bg-red-500 rounded-full"></span>
-              <span class="w-2.5 h-2.5 bg-yellow-500 rounded-full"></span>
-              <span class="w-2.5 h-2.5 bg-green-500 rounded-full"></span>
-              <span class="text-slate-600 text-xs font-mono ml-3">iot-architecture.live</span>
-              <span class="ml-auto flex items-center gap-1.5 text-xs text-green-400 font-mono">
-                <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
-                LIVE
-              </span>
+          {# Terminal bar #}
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-slate-800"
+               style="background: rgba(5,10,15,.6);">
+            <span class="w-2.5 h-2.5 rounded-full bg-red-500/80"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-green-500/80"></span>
+            <span class="font-mono text-[10px] text-slate-600 ml-2 flex-1">iot-system.architecture</span>
+            <span class="flex items-center gap-1.5 font-mono text-[10px] text-green-400">
+              <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>LIVE
+            </span>
+          </div>
+
+          <div class="p-5 space-y-1.5">
+
+            {# Cloud Layer #}
+            <div class="rounded-lg border border-slate-700/50 p-3.5" style="background: rgba(6,184,224,.04);">
+              <p class="font-mono text-[9px] uppercase tracking-[.2em] text-brand-500/70 mb-2.5 flex items-center gap-2">
+                <span class="w-3 h-px bg-brand-500/50"></span> Cloud Layer
+              </p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="tag tag-blue">Dashboard</span>
+                <span class="tag tag-blue">Analytics</span>
+                <span class="tag tag-blue">Alerts</span>
+                <span class="tag tag-blue">REST API</span>
+                <span class="tag tag-blue">MQTT Broker</span>
+              </div>
             </div>
 
-            <div class="p-5 space-y-2">
-
-              {# Cloud Layer #}
-              <div class="rounded-xl border border-slate-700/60 bg-slate-800/40 p-3.5">
-                <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-2.5">
-                  ☁&ensp;Cloud Layer
-                </p>
-                <div class="flex flex-wrap gap-1.5">
-                  <span class="bg-brand-950 border border-brand-800 text-brand-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">Dashboard</span>
-                  <span class="bg-brand-950 border border-brand-800 text-brand-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">Analytics</span>
-                  <span class="bg-brand-950 border border-brand-800 text-brand-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">Alerts</span>
-                  <span class="bg-brand-950 border border-brand-800 text-brand-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">API</span>
-                </div>
+            {# Connector #}
+            <div class="flex items-center justify-center gap-3 py-1">
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent to-brand-700/40"></div>
+              <div class="flex flex-col items-center gap-0.5">
+                <span class="w-0.5 h-3 bg-brand-600/50 rounded-full"></span>
+                <span class="w-1.5 h-1.5 bg-brand-500/60 rounded-full animate-pulse"></span>
+                <span class="w-0.5 h-3 bg-brand-600/50 rounded-full"></span>
               </div>
-
-              {# Connector #}
-              <div class="flex justify-center py-0.5">
-                <div class="w-px h-5 bg-gradient-to-b from-brand-700/60 to-purple-700/60"></div>
-              </div>
-
-              {# Edge Layer #}
-              <div class="rounded-xl border border-slate-700/60 bg-slate-800/40 p-3.5">
-                <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-2.5">
-                  ⚡&ensp;Edge Layer
-                </p>
-                <div class="flex flex-wrap gap-1.5">
-                  <span class="bg-purple-950 border border-purple-800 text-purple-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">Gateway</span>
-                  <span class="bg-purple-950 border border-purple-800 text-purple-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">Datalogger</span>
-                  <span class="bg-purple-950 border border-purple-800 text-purple-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">PLC</span>
-                  <span class="bg-purple-950 border border-purple-800 text-purple-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">Industrial PC</span>
-                </div>
-              </div>
-
-              {# Connector #}
-              <div class="flex justify-center py-0.5">
-                <div class="w-px h-5 bg-gradient-to-b from-purple-700/60 to-emerald-700/60"></div>
-              </div>
-
-              {# Field Layer #}
-              <div class="rounded-xl border border-slate-700/60 bg-slate-800/40 p-3.5">
-                <p class="text-[10px] font-mono text-slate-500 uppercase tracking-widest mb-2.5">
-                  🔌&ensp;Field Layer
-                </p>
-                <div class="flex flex-wrap gap-1.5">
-                  <span class="bg-emerald-950 border border-emerald-800 text-emerald-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">Temp Sensor</span>
-                  <span class="bg-emerald-950 border border-emerald-800 text-emerald-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">pH Sensor</span>
-                  <span class="bg-emerald-950 border border-emerald-800 text-emerald-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">DO Sensor</span>
-                  <span class="bg-emerald-950 border border-emerald-800 text-emerald-300 text-[11px] px-2.5 py-1 rounded-lg font-mono">RS485</span>
-                </div>
-              </div>
-
+              <div class="flex-1 h-px bg-gradient-to-l from-transparent to-brand-700/40"></div>
             </div>
 
-            {# Status footer #}
-            <div class="px-5 py-3 border-t border-slate-800 bg-slate-950/40
-                        flex items-center justify-between">
-              <div class="flex items-center gap-2 text-[11px] text-slate-500 font-mono">
-                <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
-                Tất cả hệ thống bình thường
+            {# Edge Layer #}
+            <div class="rounded-lg border border-slate-700/50 p-3.5" style="background: rgba(6,184,224,.025);">
+              <p class="font-mono text-[9px] uppercase tracking-[.2em] text-slate-500 mb-2.5 flex items-center gap-2">
+                <span class="w-3 h-px bg-slate-600"></span> Edge Layer
+              </p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="tag" style="background:rgba(139,92,246,.08);color:rgb(196,181,253);border-color:rgba(139,92,246,.25);">Gateway 4G</span>
+                <span class="tag" style="background:rgba(139,92,246,.08);color:rgb(196,181,253);border-color:rgba(139,92,246,.25);">Datalogger</span>
+                <span class="tag" style="background:rgba(139,92,246,.08);color:rgb(196,181,253);border-color:rgba(139,92,246,.25);">PLC</span>
+                <span class="tag" style="background:rgba(139,92,246,.08);color:rgb(196,181,253);border-color:rgba(139,92,246,.25);">Industrial PC</span>
+                <span class="tag" style="background:rgba(139,92,246,.08);color:rgb(196,181,253);border-color:rgba(139,92,246,.25);">LoRaWAN</span>
               </div>
-              <span class="text-[11px] text-slate-600 font-mono">Giám sát 24/7</span>
+            </div>
+
+            {# Connector #}
+            <div class="flex items-center justify-center gap-3 py-1">
+              <div class="flex-1 h-px bg-gradient-to-r from-transparent to-emerald-800/40"></div>
+              <div class="flex flex-col items-center gap-0.5">
+                <span class="w-0.5 h-3 bg-emerald-700/50 rounded-full"></span>
+                <span class="w-1.5 h-1.5 bg-emerald-500/60 rounded-full animate-pulse" style="animation-delay:.3s"></span>
+                <span class="w-0.5 h-3 bg-emerald-700/50 rounded-full"></span>
+              </div>
+              <div class="flex-1 h-px bg-gradient-to-l from-transparent to-emerald-800/40"></div>
+            </div>
+
+            {# Field Layer #}
+            <div class="rounded-lg border border-slate-700/50 p-3.5" style="background: rgba(16,185,129,.03);">
+              <p class="font-mono text-[9px] uppercase tracking-[.2em] text-slate-500 mb-2.5 flex items-center gap-2">
+                <span class="w-3 h-px bg-slate-600"></span> Field Layer
+              </p>
+              <div class="flex flex-wrap gap-1.5">
+                <span class="tag tag-green">Temp / Humidity</span>
+                <span class="tag tag-green">pH Sensor</span>
+                <span class="tag tag-green">DO Sensor</span>
+                <span class="tag tag-green">Flow Meter</span>
+                <span class="tag tag-green">Pressure</span>
+                <span class="tag tag-green">RS485</span>
+              </div>
             </div>
 
           </div>
+
+          {# Status footer #}
+          <div class="px-5 py-3 border-t border-slate-800 flex items-center justify-between"
+               style="background: rgba(5,10,15,.4);">
+            <div class="flex items-center gap-2 font-mono text-[10px] text-slate-600">
+              <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+              All systems operational
+            </div>
+            <span class="font-mono text-[10px] text-slate-700">Uptime 99.98%</span>
+          </div>
+
         </div>
       </div>
 
     </div>
   </div>
+
+  {# Scroll hint #}
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-30">
+    <span class="font-mono text-[9px] uppercase tracking-[.3em] text-slate-500">Scroll</span>
+    <div class="w-px h-10 bg-gradient-to-b from-slate-500 to-transparent"></div>
+  </div>
 </section>
 
 
-{# ══════════════════════════════════════════════════════════════════════════
-   USP BAR — 4 điểm mạnh (nằm ngay sau hero, không bị mất giữa các section)
-   ══════════════════════════════════════════════════════════════════════════ #}
-<section class="bg-slate-900 border-y border-slate-800">
+{# ══════════════════════════════════════════════════════════════════USP STRIP══════════════════════════════════════════════════════════════════ #}
+<section class="border-y border-slate-800/60" style="background: rgba(10,16,22,.6);">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid grid-cols-2 lg:grid-cols-4 divide-x divide-y lg:divide-y-0 divide-slate-800">
+    <div class="grid grid-cols-2 lg:grid-cols-4">
+      {% for usp in usp_items|default:"" %}{% endfor %}
 
-      <div class="flex items-start gap-3 px-6 py-5">
-        <div class="w-8 h-8 rounded-lg bg-brand-900/80 border border-brand-800
-                    flex items-center justify-center flex-shrink-0 mt-0.5">
+      {# Hardcoded — no template tag trick needed #}
+      <div class="flex items-center gap-3.5 px-6 py-6 border-r border-slate-800/60 group" data-reveal>
+        <div class="w-9 h-9 rounded-lg border border-brand-700/40 flex items-center justify-center flex-shrink-0 group-hover:border-brand-500/60 group-hover:bg-brand-950/40 transition-all">
           <svg class="w-4 h-4 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
           </svg>
         </div>
         <div>
           <p class="text-white font-semibold text-sm">Chuẩn công nghiệp</p>
-          <p class="text-slate-500 text-xs mt-0.5 leading-relaxed">IP67 — hoạt động trong môi trường khắc nghiệt</p>
+          <p class="text-slate-600 text-xs mt-0.5">IP67 — Môi trường khắc nghiệt</p>
         </div>
       </div>
 
-      <div class="flex items-start gap-3 px-6 py-5">
-        <div class="w-8 h-8 rounded-lg bg-brand-900/80 border border-brand-800
-                    flex items-center justify-center flex-shrink-0 mt-0.5">
+      <div class="flex items-center gap-3.5 px-6 py-6 border-r border-slate-800/60 group" data-reveal>
+        <div class="w-9 h-9 rounded-lg border border-brand-700/40 flex items-center justify-center flex-shrink-0 group-hover:border-brand-500/60 group-hover:bg-brand-950/40 transition-all">
           <svg class="w-4 h-4 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
           </svg>
         </div>
         <div>
           <p class="text-white font-semibold text-sm">Tích hợp nhanh</p>
-          <p class="text-slate-500 text-xs mt-0.5 leading-relaxed">Plug-and-play với Modbus · MQTT · REST API</p>
+          <p class="text-slate-600 text-xs mt-0.5">Modbus · MQTT · REST API</p>
         </div>
       </div>
 
-      <div class="flex items-start gap-3 px-6 py-5">
-        <div class="w-8 h-8 rounded-lg bg-brand-900/80 border border-brand-800
-                    flex items-center justify-center flex-shrink-0 mt-0.5">
+      <div class="flex items-center gap-3.5 px-6 py-6 border-r border-slate-800/60 group" data-reveal>
+        <div class="w-9 h-9 rounded-lg border border-brand-700/40 flex items-center justify-center flex-shrink-0 group-hover:border-brand-500/60 group-hover:bg-brand-950/40 transition-all">
           <svg class="w-4 h-4 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
           </svg>
         </div>
         <div>
           <p class="text-white font-semibold text-sm">Hỗ trợ 24/7</p>
-          <p class="text-slate-500 text-xs mt-0.5 leading-relaxed">Đội kỹ thuật SLA — cam kết phản hồi</p>
+          <p class="text-slate-600 text-xs mt-0.5">SLA cam kết phản hồi</p>
         </div>
       </div>
 
-      <div class="flex items-start gap-3 px-6 py-5">
-        <div class="w-8 h-8 rounded-lg bg-brand-900/80 border border-brand-800
-                    flex items-center justify-center flex-shrink-0 mt-0.5">
+      <div class="flex items-center gap-3.5 px-6 py-6 group" data-reveal>
+        <div class="w-9 h-9 rounded-lg border border-brand-700/40 flex items-center justify-center flex-shrink-0 group-hover:border-brand-500/60 group-hover:bg-brand-950/40 transition-all">
           <svg class="w-4 h-4 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
           </svg>
         </div>
         <div>
-          <p class="text-white font-semibold text-sm">Khả năng mở rộng</p>
-          <p class="text-slate-500 text-xs mt-0.5 leading-relaxed">Từ 1 cảm biến đến 10.000 node</p>
+          <p class="text-white font-semibold text-sm">Mở rộng không giới hạn</p>
+          <p class="text-slate-600 text-xs mt-0.5">1 → 10.000 node</p>
         </div>
       </div>
 
@@ -277,86 +278,78 @@
 </section>
 
 
-{# ══════════════════════════════════════════════════════════════════════════
-   FEATURED SOLUTIONS
-   ══════════════════════════════════════════════════════════════════════════ #}
+{# ══════════════════════════════════════════════════════════════════FEATURED SOLUTIONS══════════════════════════════════════════════════════════════════ #}
 {% if featured_solutions %}
-<section class="py-24 bg-white">
+<section class="py-24">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-14">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14" data-reveal>
       <div>
-        <p class="text-brand-600 font-mono text-xs uppercase tracking-widest mb-3">
-          — Giải pháp ngành
-        </p>
-        <h2 class="font-display text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
-          Xây dựng cho ngành của bạn
+        <p class="section-label mb-3">Giải pháp ngành</p>
+        <h2 class="font-display font-bold uppercase text-[clamp(2rem,4vw,3rem)] text-white leading-tight">
+          Xây dựng cho<br>ngành của bạn
         </h2>
       </div>
       <a href="{% url 'solutions:list' %}"
-         class="inline-flex items-center gap-2 text-sm font-semibold text-brand-700
-                hover:text-brand-900 border-b border-brand-300 hover:border-brand-700
-                pb-0.5 transition-colors self-start sm:self-auto">
-        Xem tất cả giải pháp
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+         class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest
+                text-brand-400 hover:text-brand-300 transition-colors group self-start sm:self-auto">
+        Xem tất cả
+        <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
         </svg>
       </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {% for solution in featured_solutions %}
-      <article class="group flex flex-col rounded-2xl border border-slate-200
-                      hover:border-brand-300 overflow-hidden
-                      transition-all duration-300 hover:shadow-xl hover:shadow-brand-100/50
-                      bg-white" data-animate>
+      <article class="card-industrial group overflow-hidden relative" data-reveal>
 
-        <div class="relative overflow-hidden aspect-[16/9] bg-slate-100">
+        {# Number badge #}
+        <div class="absolute top-4 right-4 z-10 font-mono text-[10px] text-slate-700">
+          {{ forloop.counter|stringformat:"02d" }}
+        </div>
+
+        {# Thumbnail #}
+        <div class="aspect-[16/9] overflow-hidden bg-slate-950 relative">
           {% if solution.thumbnail %}
           <img src="{{ solution.thumbnail.url }}"
                alt="{{ solution.title }}"
-               class="w-full h-full object-cover transition-transform duration-500
-                      group-hover:scale-[1.04]"
+               class="w-full h-full object-cover opacity-70 group-hover:opacity-90
+                      transition-all duration-500 group-hover:scale-[1.03]"
                loading="lazy" />
           {% else %}
-          <div class="w-full h-full bg-gradient-to-br from-brand-50 to-slate-100
-                      flex items-center justify-center">
-            <svg class="w-12 h-12 text-brand-300" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor" stroke-width="1">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+          <div class="w-full h-full grid-bg flex items-center justify-center">
+            <svg class="w-12 h-12 text-slate-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
             </svg>
           </div>
           {% endif %}
 
-          {% if solution.solution_category__name %}
-          <span class="absolute top-3 left-3 bg-white/95 backdrop-blur-sm
-                       text-slate-700 text-xs font-semibold px-3 py-1.5
-                       rounded-full shadow-sm">
-            {{ solution.solution_category__name }}
-          </span>
-          {% endif %}
+          {# Gradient overlay #}
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
         </div>
 
-        <div class="flex flex-col flex-1 p-6">
-          <h3 class="font-display font-bold text-slate-900 text-lg leading-snug mb-2
-                     group-hover:text-brand-700 transition-colors">
+        <div class="p-5">
+          {% if solution.category_name %}
+          <span class="tag tag-blue mb-3">{{ solution.category_name }}</span>
+          {% endif %}
+          <h3 class="font-display font-bold uppercase text-xl text-white leading-tight mb-2
+                     group-hover:text-brand-300 transition-colors">
             {{ solution.title }}
           </h3>
-          <p class="text-slate-500 text-sm leading-relaxed line-clamp-2 flex-1 mb-5">
+          <p class="text-slate-500 text-sm leading-relaxed line-clamp-2 mb-5">
             {{ solution.short_description }}
           </p>
           <a href="{% url 'solutions:detail' solution.slug %}"
-             class="inline-flex items-center gap-1.5 text-brand-600 text-sm font-semibold
-                    hover:text-brand-800 transition-colors group/link">
+             class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest
+                    text-brand-400 hover:text-brand-300 transition-colors group/link">
             Xem giải pháp
-            <svg class="w-4 h-4 transition-transform duration-200 group-hover/link:translate-x-1"
-                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover/link:translate-x-1"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
             </svg>
           </a>
         </div>
-
       </article>
       {% endfor %}
     </div>
@@ -366,91 +359,88 @@
 {% endif %}
 
 
-{# ══════════════════════════════════════════════════════════════════════════
-   FEATURED PRODUCTS
-   ══════════════════════════════════════════════════════════════════════════ #}
+{# ══════════════════════════════════════════════════════════════════ FEATURED PRODUCTS ══════════════════════════════════════════════════════════════════ #}
 {% if featured_products %}
-<section class="py-24 bg-slate-50 border-t border-slate-200">
+<section class="py-24 border-t border-slate-800/40">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-14">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14" data-reveal>
       <div>
-        <p class="text-brand-600 font-mono text-xs uppercase tracking-widest mb-3">
-          — Danh mục sản phẩm
-        </p>
-        <h2 class="font-display text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
-          Sản phẩm nổi bật
+        <p class="section-label mb-3">Danh mục thiết bị</p>
+        <h2 class="font-display font-bold uppercase text-[clamp(2rem,4vw,3rem)] text-white leading-tight">
+          Sản phẩm<br>nổi bật
         </h2>
       </div>
       <a href="{% url 'products:list' %}"
-         class="inline-flex items-center gap-2 text-sm font-semibold text-brand-700
-                hover:text-brand-900 border-b border-brand-300 hover:border-brand-700
-                pb-0.5 transition-colors self-start sm:self-auto">
-        Xem tất cả sản phẩm
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+         class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest
+                text-brand-400 hover:text-brand-300 transition-colors group self-start sm:self-auto">
+        Xem tất cả
+        <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
         </svg>
       </a>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
       {% for product in featured_products %}
-      <article class="group flex flex-col bg-white rounded-2xl border border-slate-200
-                      hover:border-brand-300 hover:shadow-lg hover:shadow-brand-100/40
-                      transition-all duration-300 overflow-hidden" data-animate>
+      <article class="card-industrial group flex flex-col overflow-hidden" data-reveal>
 
-        <div class="relative aspect-square bg-slate-50 overflow-hidden">
+        {# Image #}
+        <div class="aspect-square relative overflow-hidden"
+             style="background: rgba(5,10,15,.8);">
           {% if product.thumbnail %}
           <img src="{{ product.thumbnail }}"
                alt="{{ product.name }}"
-               class="w-full h-full object-contain p-5 transition-transform
-                      duration-300 group-hover:scale-[1.06]"
+               class="w-full h-full object-contain p-5 opacity-80 group-hover:opacity-100
+                      transition-all duration-400 group-hover:scale-[1.05]"
                loading="lazy" />
           {% else %}
-          <div class="w-full h-full flex items-center justify-center">
-            <svg class="w-12 h-12 text-slate-200" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor" stroke-width="1">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          <div class="w-full h-full grid-bg flex items-center justify-center">
+            <svg class="w-10 h-10 text-slate-800" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01"/>
             </svg>
           </div>
           {% endif %}
-          {% if product.is_new %}
-          <span class="absolute top-2.5 left-2.5 bg-brand-600 text-white
-                       text-[10px] font-bold uppercase tracking-wider
-                       px-2 py-0.5 rounded-full">Mới</span>
-          {% endif %}
+
+          {# Badges #}
+          <div class="absolute top-2.5 left-2.5 flex flex-col gap-1">
+            {% if product.is_new %}
+            <span class="tag tag-blue">New</span>
+            {% endif %}
+            {% if product.is_featured %}
+            <span class="tag tag-amber">Featured</span>
+            {% endif %}
+          </div>
         </div>
 
+        {# Info #}
         <div class="flex flex-col flex-1 p-4">
-          <p class="text-slate-400 text-[11px] font-mono mb-1">{{ product.sku }}</p>
-          <h3 class="font-semibold text-slate-900 text-sm leading-snug mb-3
-                     line-clamp-2 group-hover:text-brand-700 transition-colors flex-1">
+          <p class="font-mono text-[10px] text-slate-700 mb-1">{{ product.sku }}</p>
+          <h3 class="font-semibold text-slate-200 text-sm leading-snug mb-3 flex-1 line-clamp-2
+                     group-hover:text-brand-300 transition-colors">
             {{ product.name }}
           </h3>
 
           <div class="flex items-center justify-between mb-3">
             <div>
               {% if product.pricing_type == 'fixed' and product.price %}
-              <span class="text-brand-700 font-bold text-sm">
-                ${{ product.price|floatformat:2 }}
+              <span class="font-mono text-brand-400 font-semibold text-sm">
+                {{ product.price|intcomma }} ₫
               </span>
               {% elif product.pricing_type == 'quote' %}
-              <span class="text-amber-700 font-semibold text-xs bg-amber-50
-                           border border-amber-200 px-2 py-0.5 rounded-md">Báo giá</span>
+              <span class="tag tag-amber">Báo giá</span>
               {% else %}
-              <span class="text-slate-400 text-xs">Liên hệ</span>
+              <span class="font-mono text-slate-600 text-xs">Liên hệ</span>
               {% endif %}
             </div>
-            <span class="text-[11px] font-medium flex items-center gap-1
-              {% if product.stock_status == 'in_stock' %}text-emerald-600
-              {% elif product.stock_status == 'low_stock' %}text-amber-500
+            <span class="flex items-center gap-1 text-[10px] font-mono
+              {% if product.stock_status == 'in_stock' %}text-emerald-400
+              {% elif product.stock_status == 'low_stock' %}text-amber-400
               {% else %}text-red-400{% endif %}">
               <span class="w-1.5 h-1.5 rounded-full flex-shrink-0
                 {% if product.stock_status == 'in_stock' %}bg-emerald-400
                 {% elif product.stock_status == 'low_stock' %}bg-amber-400
-                {% else %}bg-red-400{% endif %}">
-              </span>
+                {% else %}bg-red-400{% endif %}"></span>
               {% if product.stock_status == 'in_stock' %}Còn hàng
               {% elif product.stock_status == 'low_stock' %}Sắp hết
               {% else %}Hết hàng{% endif %}
@@ -458,14 +448,13 @@
           </div>
 
           <a href="{% url 'products:detail' product.slug %}"
-             class="block text-center text-xs font-semibold py-2.5 rounded-xl
-                    border border-slate-200 text-slate-700
-                    hover:bg-brand-600 hover:text-white hover:border-brand-600
+             class="block text-center font-mono text-[11px] uppercase tracking-wider
+                    py-2.5 rounded-lg border border-slate-700 text-slate-500
+                    hover:border-brand-500/60 hover:text-brand-400 hover:bg-brand-950/20
                     transition-all duration-200">
-            Xem chi tiết
+            Chi tiết
           </a>
         </div>
-
       </article>
       {% endfor %}
     </div>
@@ -475,56 +464,47 @@
 {% endif %}
 
 
-{# ══════════════════════════════════════════════════════════════════════════
-   NEW PRODUCTS — Compact strip
-   ══════════════════════════════════════════════════════════════════════════ #}
+{# ══════════════════════════════════════════════════════════════════ NEW PRODUCTS — Horizontal strip ══════════════════════════════════════════════════════════════════ #}
 {% if new_products %}
-<section class="py-14 bg-white border-t border-slate-100">
+<section class="py-14 border-t border-slate-800/40">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div class="flex items-center justify-between mb-8">
+    <div class="flex items-center justify-between mb-8" data-reveal>
       <div class="flex items-center gap-3">
-        <span class="w-2 h-2 bg-brand-500 rounded-full animate-pulse"></span>
-        <h2 class="font-display text-xl font-bold text-slate-900">Sản phẩm mới nhất</h2>
+        <span class="w-1.5 h-1.5 bg-brand-400 rounded-full animate-pulse"></span>
+        <p class="font-mono text-[11px] uppercase tracking-[.2em] text-brand-400">Sản phẩm mới nhất</p>
       </div>
       <a href="{% url 'products:list' %}?sort=newest"
-         class="text-brand-600 text-sm font-semibold hover:text-brand-800
-                transition-colors inline-flex items-center gap-1">
-        Xem thêm
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-        </svg>
+         class="font-mono text-[11px] uppercase tracking-widest text-slate-600
+                hover:text-brand-400 transition-colors">
+        Xem thêm →
       </a>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
       {% for product in new_products %}
-      <article class="group flex flex-col bg-white rounded-xl border border-slate-200
-                      hover:border-brand-200 hover:shadow-md transition-all duration-200 overflow-hidden">
-        <div class="relative aspect-square bg-slate-50 overflow-hidden">
+      <article class="card-industrial group flex flex-col overflow-hidden" data-reveal>
+        <div class="aspect-square relative" style="background: rgba(5,10,15,.8);">
           {% if product.thumbnail %}
-          <img src="{{ product.thumbnail }}"
-               alt="{{ product.name }}"
-               class="w-full h-full object-contain p-4 transition-transform
-                      duration-300 group-hover:scale-[1.05]"
+          <img src="{{ product.thumbnail }}" alt="{{ product.name }}"
+               class="w-full h-full object-contain p-4 opacity-70 group-hover:opacity-100
+                      transition-all duration-400 group-hover:scale-105"
                loading="lazy" />
           {% endif %}
-          <span class="absolute top-2 left-2 bg-brand-600 text-white
-                       text-[10px] font-bold uppercase tracking-wider
-                       px-2 py-0.5 rounded-full">Mới</span>
+          <span class="absolute top-2 left-2 tag tag-blue">New</span>
         </div>
         <div class="p-3.5">
-          <p class="text-slate-400 text-[10px] font-mono">{{ product.sku }}</p>
-          <h3 class="font-semibold text-slate-900 text-xs mt-1 mb-3
-                     line-clamp-2 group-hover:text-brand-700 transition-colors">
+          <p class="font-mono text-[10px] text-slate-700">{{ product.sku }}</p>
+          <h3 class="font-semibold text-slate-300 text-xs mt-1 mb-3 line-clamp-2
+                     group-hover:text-brand-300 transition-colors">
             {{ product.name }}
           </h3>
           <a href="{% url 'products:detail' product.slug %}"
-             class="block text-center text-[11px] font-semibold py-2 rounded-lg
-                    border border-slate-200 text-slate-600
-                    hover:bg-brand-50 hover:border-brand-300 hover:text-brand-700
+             class="block text-center font-mono text-[10px] uppercase tracking-wider
+                    py-2 rounded-md border border-slate-800 text-slate-600
+                    hover:border-brand-500/40 hover:text-brand-400 hover:bg-brand-950/20
                     transition-all">
-            Xem chi tiết
+            Chi tiết
           </a>
         </div>
       </article>
@@ -536,26 +516,25 @@
 {% endif %}
 
 
-{# ══════════════════════════════════════════════════════════════════════════
-   FEATURED BRANDS — Logo strip
-   ══════════════════════════════════════════════════════════════════════════ #}
+{# ══════════════════════════════════════════════════════════════════ BRAND LOGOS ══════════════════════════════════════════════════════════════════ #}
 {% if featured_brands %}
-<section class="py-14 bg-slate-50 border-t border-slate-200">
+<section class="py-14 border-t border-slate-800/40">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <p class="text-center text-slate-400 text-[11px] font-mono uppercase tracking-[.2em] mb-8">
+    <p class="font-mono text-[9px] uppercase tracking-[.3em] text-slate-700 text-center mb-8" data-reveal>
       Thương hiệu đối tác
     </p>
-    <div class="flex flex-wrap items-center justify-center gap-10">
+    <div class="flex flex-wrap items-center justify-center gap-8 lg:gap-14" data-reveal>
       {% for brand in featured_brands %}
-      {# TODO: url 'categories:brand' chưa được định nghĩa #}
       <a href="#"
-         class="opacity-40 hover:opacity-90 grayscale hover:grayscale-0
-                transition-all duration-300">
+         class="opacity-20 hover:opacity-70 transition-all duration-300
+                grayscale hover:grayscale-0 hover:scale-105">
         {% if brand.logo %}
         <img src="{{ brand.logo.url }}" alt="{{ brand.name }}"
-             class="h-8 w-auto object-contain" loading="lazy" />
+             class="h-7 w-auto object-contain" loading="lazy" />
         {% else %}
-        <span class="text-slate-500 font-semibold text-sm tracking-wide">{{ brand.name }}</span>
+        <span class="font-display font-bold uppercase tracking-widest text-sm text-slate-500">
+          {{ brand.name }}
+        </span>
         {% endif %}
       </a>
       {% endfor %}
@@ -565,83 +544,63 @@
 {% endif %}
 
 
-{# ══════════════════════════════════════════════════════════════════════════
-   LATEST BLOG — Layout featured + 2 bài nhỏ
-   ══════════════════════════════════════════════════════════════════════════ #}
+{# ══════════════════════════════════════════════════════════════════ BLOG POSTS ══════════════════════════════════════════════════════════════════ #}
 {% if latest_posts %}
-<section class="py-24 bg-white border-t border-slate-200">
+<section class="py-24 border-t border-slate-800/40">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-14">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14" data-reveal>
       <div>
-        <p class="text-brand-600 font-mono text-xs uppercase tracking-widest mb-3">
-          — Tài nguyên kỹ thuật
-        </p>
-        <h2 class="font-display text-3xl lg:text-4xl font-bold text-slate-900">
-          Bài viết & Hướng dẫn
+        <p class="section-label mb-3">Tài nguyên kỹ thuật</p>
+        <h2 class="font-display font-bold uppercase text-[clamp(2rem,4vw,3rem)] text-white leading-tight">
+          Bài viết &<br>Hướng dẫn
         </h2>
       </div>
-      {# TODO: url 'blog:list' chưa được định nghĩa #}
-      <a href="#"
-         class="inline-flex items-center gap-2 text-sm font-semibold text-brand-700
-                hover:text-brand-900 border-b border-brand-300 hover:border-brand-700
-                pb-0.5 transition-colors self-start sm:self-auto">
-        Xem tất cả bài viết
-        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      {% url 'blog:list' as url_blog %}
+      <a href="{{ url_blog|default:'#' }}"
+         class="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest
+                text-brand-400 hover:text-brand-300 transition-colors group self-start sm:self-auto">
+        Xem tất cả
+        <svg class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
         </svg>
       </a>
     </div>
 
-    {# Bài đầu tiên: chiếm 2/3 chiều ngang. Bài 2+3: stack dọc ở cột phải #}
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       {% for post in latest_posts %}
-      <article class="group flex flex-col rounded-2xl border border-slate-200
-                      hover:border-brand-200 hover:shadow-lg hover:shadow-brand-50/60
-                      transition-all duration-300 overflow-hidden bg-white
-                      {% if forloop.first %}md:col-span-2{% endif %}"
-               data-animate>
+      <article class="card-industrial group flex flex-col overflow-hidden {% if forloop.first %}md:col-span-1{% endif %}"
+               data-reveal>
 
         {% if post.thumbnail %}
-        <div class="overflow-hidden {% if forloop.first %}aspect-[2/1]{% else %}aspect-[16/9]{% endif %}">
-          <img src="{{ post.thumbnail }}"
-               alt="{{ post.title }}"
-               class="w-full h-full object-cover transition-transform
-                      duration-500 group-hover:scale-[1.04]"
+        <div class="overflow-hidden aspect-[16/9] relative">
+          <img src="{{ post.thumbnail }}" alt="{{ post.title }}"
+               class="w-full h-full object-cover opacity-60 group-hover:opacity-90
+                      transition-all duration-500 group-hover:scale-[1.03]"
                loading="lazy" />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
         </div>
         {% endif %}
 
-        <div class="flex flex-col flex-1 p-6">
+        <div class="flex flex-col flex-1 p-5">
           <div class="flex items-center gap-2.5 mb-3">
             {% if post.category_name %}
-            <span class="bg-brand-50 text-brand-700 text-xs font-semibold
-                         px-2.5 py-1 rounded-full border border-brand-100">
-              {{ post.category_name }}
-            </span>
+            <span class="tag tag-blue">{{ post.category_name }}</span>
             {% endif %}
-            <span class="text-slate-400 text-xs">{{ post.read_time }} phút đọc</span>
+            <span class="font-mono text-[10px] text-slate-600">{{ post.read_time }} phút đọc</span>
           </div>
 
-          <h3 class="font-display font-bold text-slate-900 leading-snug mb-2 flex-1
-                     group-hover:text-brand-700 transition-colors line-clamp-2
-                     {% if forloop.first %}text-xl{% else %}text-base{% endif %}">
+          <h3 class="font-display font-bold uppercase text-lg text-white leading-tight mb-2 flex-1
+                     group-hover:text-brand-300 transition-colors line-clamp-2">
             {{ post.title }}
           </h3>
 
-          {% if forloop.first %}
-          <p class="text-slate-500 text-sm line-clamp-2 mb-5">
-            {{ post.short_description }}
-          </p>
-          {% endif %}
-
-          {# TODO: url 'blog:detail' chưa được định nghĩa #}
-          <a href="#"
-             class="inline-flex items-center gap-1.5 text-brand-600 text-sm font-semibold
-                    hover:text-brand-800 transition-colors mt-4 group/link">
-            Đọc bài viết
-            <svg class="w-4 h-4 transition-transform duration-200 group-hover/link:translate-x-1"
-                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <a href="{{ url_blog|default:'#' }}"
+             class="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-widest
+                    text-brand-500 hover:text-brand-300 transition-colors mt-4 group/link">
+            Đọc tiếp
+            <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover/link:translate-x-1"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
             </svg>
           </a>
@@ -656,57 +615,73 @@
 {% endif %}
 
 
-{# ══════════════════════════════════════════════════════════════════════════
-   CTA BANNER — Dark, full-bleed
-   ══════════════════════════════════════════════════════════════════════════ #}
-<section class="relative overflow-hidden bg-slate-950 py-24">
+{# ══════════════════════════════════════════════════════════════════ CTA BANNER ══════════════════════════════════════════════════════════════════ #}
+<section class="relative py-28 border-t border-slate-800/40 overflow-hidden">
 
-  <div class="absolute inset-0 opacity-[0.07]"
-       style="background-image:
-         linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
-         linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px);
-       background-size: 40px 40px;">
-  </div>
-  <div class="absolute inset-0 bg-gradient-to-br from-brand-900/40 via-transparent to-indigo-950/30 pointer-events-none"></div>
+  <div class="absolute inset-0 grid-bg opacity-60"></div>
+  <div class="absolute inset-0 noise-overlay"></div>
+
+  {# Big glow #}
+  <div class="absolute inset-0 pointer-events-none"
+       style="background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(6,184,224,.06) 0%, transparent 70%);"></div>
+
+  {# Decorative lines #}
+  <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-500/30 to-transparent"></div>
+  <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-500/20 to-transparent"></div>
 
   <div class="relative max-w-3xl mx-auto px-4 text-center">
-    <p class="text-brand-400 font-mono text-xs uppercase tracking-[.2em] mb-5">
-      — Bắt đầu ngay hôm nay
-    </p>
-    <h2 class="font-display text-4xl lg:text-5xl font-extrabold text-white
-               leading-[1.1] tracking-tight mb-5">
-      Sẵn sàng chuyển đổi<br>hoạt động của bạn?
+
+    <p class="section-label justify-center mb-5" data-reveal>Bắt đầu ngay hôm nay</p>
+
+    <h2 class="font-display font-bold uppercase text-white leading-[.95] mb-6 tracking-tighter"
+        style="font-size: clamp(2.8rem,7vw,5.5rem);"
+        data-reveal>
+      Sẵn sàng chuyển đổi<br>
+      <span class="text-white"> hoạt động của bạn?
+      </span>
     </h2>
-    <p class="text-slate-400 text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+
+    <p class="text-slate-500 text-lg mb-10 max-w-xl mx-auto leading-relaxed" data-reveal>
       Nói chuyện với kỹ sư của chúng tôi. Chúng tôi sẽ thiết kế giải pháp
       phù hợp với ứng dụng cụ thể của bạn.
     </p>
 
-    <div class="flex flex-col sm:flex-row justify-center gap-3">
-      {# TODO: url 'contacts:demo_request' chưa được định nghĩa #}
-      <a href="#"
-         class="inline-flex items-center justify-center gap-2
-                bg-brand-600 hover:bg-brand-500 text-white font-semibold
-                px-8 py-4 rounded-xl transition-all duration-200
-                shadow-xl shadow-brand-950/60 text-sm">
+    <div class="flex flex-col sm:flex-row justify-center gap-3" data-reveal>
+      {% url 'contacts:demo_request' as url_demo %}
+      <a href="{{ url_demo|default:'#' }}" class="btn-primary justify-center text-sm px-8 py-3.5">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round"
-                d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.361a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.82v6.361a1 1 0 01-1.447.894L15 14M3 8a2 2 0 012-2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z"/>
         </svg>
         Đặt lịch demo miễn phí
       </a>
-      {# TODO: url 'orders:quote_request' chưa được định nghĩa #}
-      <a href="#"
-         class="inline-flex items-center justify-center gap-2
-                border border-slate-700 hover:border-slate-500
-                text-slate-300 hover:text-white font-semibold
-                px-8 py-4 rounded-xl transition-all duration-200
-                bg-slate-900/60 backdrop-blur-sm text-sm">
+      <a href="{{ url_quote|default:'#' }}" class="btn-ghost justify-center text-sm px-8 py-3.5">
         Yêu cầu báo giá
       </a>
     </div>
-  </div>
 
+    {# Trust row #}
+    <div class="flex items-center justify-center gap-6 mt-12 pt-12 border-t border-slate-800/60" data-reveal>
+      <div class="flex items-center gap-2 text-slate-600 text-xs font-mono">
+        <svg class="w-4 h-4 text-brand-500/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+        ISO Certified
+      </div>
+      <div class="w-px h-4 bg-slate-800"></div>
+      <div class="flex items-center gap-2 text-slate-600 text-xs font-mono">
+        <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+        Uptime 99.98%
+      </div>
+      <div class="w-px h-4 bg-slate-800"></div>
+      <div class="flex items-center gap-2 text-slate-600 text-xs font-mono">
+        <svg class="w-4 h-4 text-brand-500/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        </svg>
+        Phản hồi &lt; 2h
+      </div>
+    </div>
+
+  </div>
 </section>
 
 {% endblock %}
