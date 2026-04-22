@@ -12,7 +12,7 @@ class ContactView(CreateView):
 
     def form_valid(self, form): 
         inquiry = form.save(commit=False)
-        inquiry.ip_address = self.requeste.META.get('REMOTE_ADDR')
+        inquiry.ip_address = self.request.META.get('REMOTE_ADDR')
         inquiry.user_agent = self.request.META.get('HTTP_USER_AGENT', '')
         inquiry.source_url = self.request.META.get('HTTP_REFERER', '')
         inquiry.save()

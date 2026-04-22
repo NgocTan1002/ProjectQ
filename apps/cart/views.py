@@ -125,4 +125,4 @@ class CartClearView(View):
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":
             return JsonResponse({"success": True, "message": "Đã làm mới giỏ hàng."})
         messages.success(request, "Đã làm mới giỏ hàng.")
-        return request("cart:detail")
+        return redirect("cart:detail")
