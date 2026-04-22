@@ -35,6 +35,7 @@ INSTALLED_APPS = [
 
     "apps.core",
     "apps.categories",
+    "apps.dashboard",
     "apps.products",
     "apps.solutions",
     "apps.cart",

@@ -29,6 +29,7 @@ urlpatterns = [
     path("contact/", include("apps.contacts.urls",  namespace="contacts")),
     path("blog/",    include("apps.blog.urls",      namespace="blog")),
 #     path("customers/", include("apps.customers.urls", namespace="customers")),
+    path("dashboard/", include("apps.dashboard.urls", namespace="dashboard")),
 ]
 
 if settings.DEBUG:
