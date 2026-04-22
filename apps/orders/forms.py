@@ -1,12 +1,14 @@
 from django import forms
 from .models import QuoteRequest
 
+
 _input_cls = (
     'w-full bg-slate-900 border border-slate-700 text-slate-200 text-sm '
     'px-4 py-3 rounded-xl placeholder-slate-600 '
     'focus:outline-none focus:border-brand-600 focus:ring-1 '
     'focus:ring-brand-700 transition-colors'
 )
+
 
 class CheckoutForm(forms.Form):
     email         = forms.EmailField()
@@ -23,9 +25,9 @@ class CheckoutForm(forms.Form):
     notes         = forms.CharField(
         widget=forms.Textarea(attrs={'rows': 3}), required=False
     )
-    po_number = forms.CharField(max_length=100, required=False, label='PO Number')
+    po_number     = forms.CharField(max_length=100, required=False, label='PO Number')
 
-    def __intit__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():
             field.widget.attrs.setdefault('class', _input_cls)
@@ -40,12 +42,13 @@ class CheckoutForm(forms.Form):
             'postal_code':   cleaned.get('postal_code', ''),
             'country':       cleaned.get('country', 'Việt Nam'),
         }
-        cleaned['biling_address'] = cleaned['shipping_address']
+        cleaned['billing_address'] = cleaned['shipping_address']
         return cleaned
-    
-class QuoteRequestForm(forms.Form):
+
+
+class QuoteRequestForm(forms.ModelForm):
     class Meta:
-        model = QuoteRequest
+        model  = QuoteRequest
         fields = [
             'name', 'email', 'phone', 'company',
             'solution', 'application', 'message',
@@ -60,6 +63,7 @@ class QuoteRequestForm(forms.Form):
             }),
             'solution': forms.Select(),
         }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields.values():

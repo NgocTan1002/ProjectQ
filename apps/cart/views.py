@@ -119,7 +119,7 @@ class CartRemoveView(View):
         return redirect("cart:detail")
     
 class CartClearView(View):
-    def post(self, request, *args, **kwwargs):
+    def post(self, request, *args, **kwargs):
         cart = CartService.get_or_create_cart(request)
         cart.items.all().delete()
         if request.headers.get("X-Requested-With") == "XMLHttpRequest":

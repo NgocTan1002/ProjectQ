@@ -25,10 +25,10 @@ urlpatterns = [
     path("products/", include("apps.products.urls", namespace="products")),
     path("solutions/", include("apps.solutions.urls", namespace="solutions")),
     path("cart/",    include("apps.cart.urls",      namespace="cart")),
-#     path("orders/",  include("apps.orders.urls",    namespace="orders")),
+    path("orders/",  include("apps.orders.urls",    namespace="orders")),
     path("contact/", include("apps.contacts.urls",  namespace="contacts")),
     path("blog/",    include("apps.blog.urls",      namespace="blog")),
-#     path("customers/", include("apps.customers.urls", namespace="customers")),
+    path("customers/", include("apps.customers.urls", namespace="customers")),
     path("dashboard/", include("apps.dashboard.urls", namespace="dashboard")),
 ]
 

@@ -133,7 +133,7 @@ class CategoryPostListView(TemplateView):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         self.category = get_object_or_404(
-            BlogCategory, slug=kwargs['slug'], is_active=True
+            BlogCategory, slug=kwargs['category_slug'], is_active=True
         )
 
     def get_context_data(self, **kwargs):
