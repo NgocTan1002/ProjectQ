@@ -73,7 +73,7 @@ class CartUpdateView(View):
                 item.quantity = quantity
                 item.save(update_fields=["quantity", "updated_at"])
         except CartItem.DoesNotExist:
-            if request.headers.get("X-Requested-With") == "XMLHHttpRequest":
+            if request.headers.get("X-Requested-With") == "XMLHttpRequest":
                 return JsonResponse({"success":False, "message":"Item không tồn tại."}, status=404)
             messages.error(request, "Item không tồn tại.")
             return redirect("cart:detail")
