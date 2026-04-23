@@ -70,7 +70,7 @@
         Tất cả
       </a>
       {% for cat in solution_categories %}
-      <a href="{% url 'solutions:list' category_slug=cat.slug %}"
+      <a href="{% url 'solutions:by_category' category_slug=cat.slug %}"
          class="px-4 py-2 rounded-lg font-mono text-[11px] uppercase tracking-wider
                 transition-all duration-200
                 {% if active_category == cat.slug %}
