@@ -74,6 +74,13 @@ class HomeView(TemplateView):
             'latest_posts': latest_posts,
             'stats': stats,
         }
+        context['search_hints'] = [
+            "Cảm biến nhiệt độ",
+            "Gateway 4G",
+            "PLC",
+            "Giám sát nhà kính"
+        ]
+
         cache.set(cache_key, payload, 300)  # 5 minutes
         context.update(payload)
         return context
