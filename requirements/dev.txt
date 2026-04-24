@@ -1,10 +1,10 @@
-# =============================================================================
-# Dev requirements — kế thừa base
-# =============================================================================
 -r base.txt
-
-django-debug-toolbar>=4.3,<5   # SQL query inspector
-factory-boy>=3.3,<4             # Test data factories
-pytest-django>=4.8,<5           # pytest integration
-pytest-cov>=5.0,<6              # Coverage reports
-Faker>=25.0,<26                 # Fake data generation
+django-debug-toolbar==4.3.0
+factory-boy==3.3.0
+pytest-django==4.8.0
+pytest-cov==5.0.0
+coverage==7.5.1
+black==24.4.2
+flake8==7.0.0
+isort==5.13.2
+ipython==8.24.0
