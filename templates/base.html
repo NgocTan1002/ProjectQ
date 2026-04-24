@@ -15,6 +15,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  {# ── Theme init: chạy trước khi render để tránh flash ── #}
+  <script>
+    (function () {
+      var saved = localStorage.getItem('theme');
+      // Mặc định dark nếu chưa có lựa chọn
+      if (saved === 'light') {
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -78,52 +91,133 @@
     }
 
     @layer components {
+
+      /* ── Buttons ─────────────────────────────────────────────── */
       .btn-primary {
-        @apply inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-400
-               text-slate-950 font-bold px-6 py-3 rounded-lg
-               transition-all duration-200 text-sm tracking-wide
-               shadow-lg shadow-brand-500/20 hover:shadow-brand-400/30;
-      }
-      .btn-ghost {
-        @apply inline-flex items-center gap-2 border transition-all duration-200 text-sm
-               font-semibold px-6 py-3 rounded-lg bg-transparent;
-        @apply border-slate-300 hover:border-brand-500 text-slate-700 hover:text-brand-600;
-        @apply dark:border-slate-700 dark:hover:border-brand-500/60 dark:text-slate-400 dark:hover:text-brand-300;
+        @apply inline-flex items-center gap-2 font-bold text-sm tracking-wide
+              px-6 py-3 rounded-lg transition-all duration-200
+              shadow-lg shadow-brand-500/20 hover:shadow-brand-400/30
+              /* dark */
+              bg-brand-500 hover:bg-brand-400 text-slate-950
+              /* light: hơi đậm hơn để tương phản trên nền trắng */
+              dark:bg-brand-500 dark:hover:bg-brand-400 dark:text-slate-950;
       }
 
+      .btn-ghost {
+        @apply inline-flex items-center gap-2 font-semibold text-sm
+              px-6 py-3 rounded-lg bg-transparent transition-all duration-200
+              /* light */
+              border border-slate-300 text-slate-600
+              hover:border-brand-500/60 hover:text-brand-600
+              /* dark */
+              dark:border-slate-700 dark:text-slate-400
+              dark:hover:border-brand-500/60 dark:hover:text-brand-300;
+      }
+
+      /* ── Navigation ──────────────────────────────────────────── */
       .nav-link {
-        @apply relative text-sm font-medium px-3 py-2 rounded-md transition-colors duration-150;
-        @apply text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white;
+        @apply relative text-sm font-medium px-3 py-2 rounded-md
+              transition-colors duration-150
+              /* light */
+              text-slate-600 hover:text-slate-900 hover:bg-slate-100
+              /* dark */
+              dark:text-slate-400 dark:hover:text-white dark:hover:bg-transparent;
       }
 
       .nav-link::after {
         content: '';
-        @apply absolute bottom-0 left-3 right-3 h-px bg-brand-500
-               scale-x-0 transition-transform duration-200 origin-left;
+        @apply absolute bottom-0 left-3 right-3 h-px
+              scale-x-0 transition-transform duration-200 origin-left
+              bg-brand-500 dark:bg-brand-400;
       }
+
       .nav-link:hover::after { @apply scale-x-100; }
       .nav-link.active {
         @apply text-slate-900 dark:text-white;
       }
       .nav-link.active::after { @apply scale-x-100; }
 
-      .section-label {
-        @apply font-mono text-[10px] uppercase tracking-[.2em] flex items-center gap-2;
-        @apply text-brand-600 dark:text-brand-400;
+      /* ── Cards ───────────────────────────────────────────────── */
+      .card-industrial {
+        @apply rounded-xl border transition-all duration-300 backdrop-blur-sm
+              /* light */
+              bg-white border-slate-200
+              hover:border-brand-400/60 hover:shadow-md hover:shadow-brand-100
+              /* dark */
+              dark:bg-slate-900/60 dark:border-slate-800
+              dark:hover:border-brand-500/40 dark:hover:bg-slate-900;
       }
+
+      /* ── Section label ───────────────────────────────────────── */
+      .section-label {
+        @apply font-mono text-[10px] uppercase tracking-[.2em]
+              flex items-center gap-2
+              text-brand-600 dark:text-brand-400;
+      }
+
       .section-label::before {
         content: '';
-        @apply inline-block w-4 h-px bg-brand-600 dark:bg-brand-400;
+        @apply inline-block w-4 h-px
+              bg-brand-600 dark:bg-brand-400;
       }
 
-      .card-industrial {
-        @apply rounded-xl transition-all duration-300;
-        @apply bg-white border border-slate-200 hover:border-brand-400 hover:bg-slate-50 shadow-sm;
-        @apply dark:bg-slate-900/60 dark:border-slate-800 dark:hover:border-brand-500/40 dark:hover:bg-slate-900 dark:shadow-none;
+      /* ── Tags ────────────────────────────────────────────────── */
+      .tag {
+        @apply inline-flex items-center gap-1.5 text-[10px] font-mono font-medium
+              uppercase tracking-wider px-2.5 py-1 rounded border;
       }
 
+      .tag-blue {
+        /* light */
+        @apply bg-brand-50 text-brand-700 border-brand-200
+        /* dark */
+              dark:bg-brand-950/60 dark:text-brand-300 dark:border-brand-800/60;
+      }
+
+      .tag-green {
+        @apply bg-emerald-50 text-emerald-700 border-emerald-200
+              dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60;
+      }
+
+      .tag-amber {
+        @apply bg-amber-50 text-amber-700 border-amber-200
+              dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800/60;
+      }
+
+      .tag-red {
+        @apply bg-red-50 text-red-700 border-red-200
+              dark:bg-red-950/60 dark:text-red-300 dark:border-red-800/60;
+      }
+
+      /* ── Flash messages ──────────────────────────────────────── */
+      .msg-success {
+        @apply bg-emerald-50 text-emerald-700 border border-emerald-200
+              dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60;
+      }
+
+      .msg-error {
+        @apply bg-red-50 text-red-700 border border-red-200
+              dark:bg-red-950/60 dark:text-red-300 dark:border-red-800/60;
+      }
+
+      .msg-warning {
+        @apply bg-amber-50 text-amber-700 border border-amber-200
+              dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800/60;
+      }
+
+      .msg-info {
+        @apply bg-brand-50 text-brand-700 border border-brand-200
+              dark:bg-brand-950/60 dark:text-brand-300 dark:border-brand-700/60;
+      }
+
+      /* ── Backgrounds đặc thù ─────────────────────────────────── */
       .noise-overlay {
         background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      }
+
+      /* light mode: giảm opacity noise để không quá rõ trên nền trắng */
+      :root:not(.dark) .noise-overlay {
+        opacity: 0.3;
       }
 
       .grid-bg {
@@ -133,59 +227,27 @@
         background-size: 40px 40px;
       }
 
-      .tag {
-        @apply inline-flex items-center gap-1.5 text-[10px] font-mono font-medium
-               uppercase tracking-wider px-2.5 py-1 rounded border;
+      /* light mode: tăng độ đậm để grid lines visible */
+      :root:not(.dark) .grid-bg {
+        background-image:
+          linear-gradient(rgba(8,145,178,.10) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(8,145,178,.10) 1px, transparent 1px);
       }
-      .tag-blue {
-        @apply bg-brand-50 text-brand-700 border-brand-200;
-        @apply dark:bg-brand-950/60 dark:text-brand-300 dark:border-brand-800/60;
-      }
-      .tag-green {
-        @apply bg-emerald-50 text-emerald-700 border-emerald-200;
-        @apply dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60;
-      }
-      .tag-amber {
-        @apply bg-amber-50 text-amber-700 border-amber-200;
-        @apply dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800/60;
-      }
-      .tag-red {
-        @apply bg-red-50 text-red-700 border-red-200;
-        @apply dark:bg-red-950/60 dark:text-red-300 dark:border-red-800/60;
-      }
-
-      .msg-success {
-        @apply border bg-emerald-50 text-emerald-800 border-emerald-200;
-        @apply dark:bg-emerald-950/60 dark:text-emerald-300 dark:border-emerald-800/60;
-      }
-      .msg-error {
-        @apply border bg-red-50 text-red-800 border-red-200;
-        @apply dark:bg-red-950/60 dark:text-red-300 dark:border-red-800/60;
-      }
-      .msg-warning {
-        @apply border bg-amber-50 text-amber-800 border-amber-200;
-        @apply dark:bg-amber-950/60 dark:text-amber-300 dark:border-amber-800/60;
-      }
-      .msg-info {
-        @apply border bg-brand-50 text-brand-800 border-brand-200;
-        @apply dark:bg-brand-950/60 dark:text-brand-300 dark:border-brand-700/60;
-      }
-
-      .autocomplete-item {
-        @apply flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors last:border-0;
-        @apply hover:bg-slate-100 border-b border-slate-200;
-        @apply dark:hover:bg-slate-800/80 dark:border-slate-800/60;
-      }
-
-      .user-menu-item {
-        @apply flex items-center gap-2.5 px-4 py-2.5 text-sm transition-colors w-full text-left;
-        @apply text-slate-700 hover:text-slate-900 hover:bg-slate-100;
-        @apply dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800/60;
-      }
+          .user-menu-item {
+            @apply flex items-center gap-3 w-full px-4 py-2.5 text-sm
+              transition-colors duration-150 text-left
+              /* light */
+              text-slate-600 hover:text-slate-900 hover:bg-slate-50
+              /* dark */
+              dark:text-slate-400 dark:hover:text-white dark:hover:bg-slate-800/60;
+          }
     }
 
     @layer utilities {
-      .text-display { @apply font-display font-bold uppercase tracking-tight; }
+      .text-display {
+        @apply font-display font-bold uppercase tracking-tight;
+      }
+
       .clip-text {
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -838,25 +900,34 @@
   <script>
   (function () {
 
-    // ─── 0. Theme toggle ────────────────────────────────────────────────
-    const html        = document.documentElement;
-    const themeBtn    = document.getElementById('theme-toggle');
-    const iconSun     = document.getElementById('icon-sun');
-    const iconMoon    = document.getElementById('icon-moon');
+    // ─── 0. Theme toggle ──────────────────────────────────────────
+    const html          = document.documentElement;
+    const themeBtn      = document.getElementById('theme-toggle');
+    const iconSun       = document.getElementById('icon-sun');
+    const iconMoon      = document.getElementById('icon-moon');
     const searchOverlay = document.getElementById('search-overlay');
+    const header        = document.getElementById('site-header');
 
     function isDark() { return html.classList.contains('dark'); }
 
     function syncIcons() {
-      if (iconSun)  iconSun.classList.toggle('hidden', !isDark());
-      if (iconMoon) iconMoon.classList.toggle('hidden', isDark());
+      // dark đang bật → hiện sun (click để sang light)
+      iconSun?.classList.toggle('hidden', !isDark());
+      // light đang bật → hiện moon (click để sang dark)
+      iconMoon?.classList.toggle('hidden', isDark());
     }
 
     function syncSearchBg() {
       if (!searchOverlay) return;
       searchOverlay.style.background = isDark()
         ? 'rgba(5,10,15,.92)'
-        : 'rgba(255,255,255,.92)';
+        : 'rgba(255,255,255,.95)';
+    }
+
+    // ── Gọi onScroll an toàn dù khai báo sau ──
+    function triggerScrollSync() {
+      // dùng requestAnimationFrame thay setTimeout để chắc chắn DOM đã repaint
+      requestAnimationFrame(() => onScroll());
     }
 
     function applyTheme(theme) {
@@ -864,10 +935,10 @@
       localStorage.setItem('theme', theme);
       syncIcons();
       syncSearchBg();
-      setTimeout(() => { if (typeof onScroll === 'function') onScroll(); }, 50);
+      triggerScrollSync();
     }
 
-    // Init icons on load
+    // Sync ngay khi load
     syncIcons();
     syncSearchBg();
 
@@ -876,18 +947,19 @@
     });
 
 
-    // ─── 1. Sticky header ────────────────────────────────────────────────
-    const header = document.getElementById('site-header');
-
+    // ─── 1. Sticky header ─────────────────────────────────────────
+    // Khai báo function trước các caller để tránh hoisting issue
     function onScroll() {
-      if (window.scrollY > 40) {
-        if (isDark()) {
-          header.style.background   = 'rgba(8,13,18,.96)';
-          header.style.borderBottom = '1px solid rgba(255,255,255,.06)';
-        } else {
-          header.style.background   = 'rgba(255,255,255,.97)';
-          header.style.borderBottom = '1px solid rgba(0,0,0,.07)';
-        }
+      if (!header) return;
+      const scrolled = window.scrollY > 40;
+
+      if (scrolled) {
+        header.style.background     = isDark()
+          ? 'rgba(8,13,18,.96)'
+          : 'rgba(255,255,255,.97)';
+        header.style.borderBottom   = isDark()
+          ? '1px solid rgba(255,255,255,.06)'
+          : '1px solid rgba(0,0,0,.07)';
         header.style.backdropFilter = 'blur(16px)';
         header.style.boxShadow      = isDark()
           ? '0 1px 20px rgba(0,0,0,.4)'
@@ -904,25 +976,28 @@
     onScroll();
 
 
-    // ─── 2. Mobile menu ──────────────────────────────────────────────────
+    // ─── 2. Mobile menu ───────────────────────────────────────────
     const mobileBtn  = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
-    const bars       = mobileBtn ? mobileBtn.querySelectorAll('.menu-bar') : [];
-    let menuOpen = false;
+    const bars       = mobileBtn?.querySelectorAll('.menu-bar') ?? [];
+    let menuOpen     = false;
 
     mobileBtn?.addEventListener('click', () => {
       menuOpen = !menuOpen;
-      mobileMenu.style.maxHeight = menuOpen ? mobileMenu.scrollHeight + 'px' : '0';
-      if (bars[0]) bars[0].style.transform = menuOpen ? 'translateY(7px) rotate(45deg)' : '';
-      if (bars[1]) bars[1].style.opacity   = menuOpen ? '0' : '1';
-      if (bars[2]) bars[2].style.transform = menuOpen ? 'translateY(-7px) rotate(-45deg)' : '';
+      mobileMenu.style.maxHeight = menuOpen
+        ? mobileMenu.scrollHeight + 'px'
+        : '0';
+      bars[0] && (bars[0].style.transform = menuOpen ? 'translateY(7px) rotate(45deg)' : '');
+      bars[1] && (bars[1].style.opacity   = menuOpen ? '0' : '1');
+      bars[2] && (bars[2].style.transform = menuOpen ? 'translateY(-7px) rotate(-45deg)' : '');
     });
 
 
-    // ─── 3. User dropdown ────────────────────────────────────────────────
+    // ─── 3. User dropdown ─────────────────────────────────────────
     const userBtn      = document.getElementById('user-menu-btn');
     const userDropdown = document.getElementById('user-dropdown');
     const userChevron  = document.getElementById('user-chevron');
+    const userWrapper  = document.getElementById('user-menu-wrapper');
 
     if (userBtn && userDropdown) {
       let dropOpen = false;
@@ -931,29 +1006,32 @@
         dropOpen = true;
         userDropdown.classList.remove('opacity-0', 'invisible', 'translate-y-1');
         userDropdown.classList.add('opacity-100', 'visible', 'translate-y-0');
-        if (userChevron) userChevron.style.transform = 'rotate(180deg)';
+        userChevron && (userChevron.style.transform = 'rotate(180deg)');
       };
+
       const closeDrop = () => {
         dropOpen = false;
         userDropdown.classList.add('opacity-0', 'invisible', 'translate-y-1');
         userDropdown.classList.remove('opacity-100', 'visible', 'translate-y-0');
-        if (userChevron) userChevron.style.transform = '';
+        userChevron && (userChevron.style.transform = '');
       };
 
       userBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         dropOpen ? closeDrop() : openDrop();
       });
+
       document.addEventListener('click', (e) => {
-        if (!document.getElementById('user-menu-wrapper')?.contains(e.target)) closeDrop();
+        if (!userWrapper?.contains(e.target)) closeDrop();
       });
+
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeDrop();
       });
     }
 
 
-    // ─── 4. Search overlay ───────────────────────────────────────────────
+    // ─── 4. Search overlay ────────────────────────────────────────
     const searchToggle  = document.getElementById('search-toggle');
     const searchClose   = document.getElementById('search-close');
     const searchInput   = document.getElementById('search-input');
@@ -966,35 +1044,41 @@
     let searchDebounce = null;
 
     const openSearch = () => {
-      syncSearchBg();
-      searchOverlay.classList.remove('opacity-0', 'invisible');
-      searchOverlay.classList.add('opacity-100', 'visible');
+      syncSearchBg(); // sync màu nền ngay trước khi show
+      searchOverlay?.classList.remove('opacity-0', 'invisible');
+      searchOverlay?.classList.add('opacity-100', 'visible');
       document.body.style.overflow = 'hidden';
       setTimeout(() => searchInput?.focus(), 80);
     };
+
     const closeSearch = () => {
-      searchOverlay.classList.add('opacity-0', 'invisible');
-      searchOverlay.classList.remove('opacity-100', 'visible');
+      searchOverlay?.classList.add('opacity-0', 'invisible');
+      searchOverlay?.classList.remove('opacity-100', 'visible');
       document.body.style.overflow = '';
     };
 
     searchToggle?.addEventListener('click', openSearch);
     searchClose?.addEventListener('click',  closeSearch);
 
+    // Ctrl+K / Cmd+K shortcut
     document.addEventListener('keydown', (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
         searchOverlay?.classList.contains('invisible') ? openSearch() : closeSearch();
       }
-      if (e.key === 'Escape' && searchOverlay && !searchOverlay.classList.contains('invisible')) {
-        closeSearch();
+      if (e.key === 'Escape') {
+        if (searchOverlay && !searchOverlay.classList.contains('invisible')) {
+          closeSearch();
+        }
       }
     });
 
+    // Click backdrop → đóng
     searchOverlay?.addEventListener('click', (e) => {
       if (e.target === searchOverlay) closeSearch();
     });
 
+    // Enter → chuyển sang trang search đầy đủ
     searchInput?.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         const q = searchInput.value.trim();
@@ -1004,30 +1088,42 @@
       }
     });
 
+    // Autocomplete
     searchInput?.addEventListener('input', () => {
       const q = searchInput.value.trim();
-      searchClear.classList.toggle('hidden', q.length === 0);
+      searchClear?.classList.toggle('hidden', q.length === 0);
 
-      if (q.length < 2) { searchResults.classList.add('hidden'); return; }
+      if (q.length < 2) {
+        searchResults?.classList.add('hidden');
+        return;
+      }
 
-      if (searchAllLink) searchAllLink.href = '{% url "core:search" %}?q=' + encodeURIComponent(q);
+      if (searchAllLink) {
+        searchAllLink.href = '{% url "core:search" %}?q=' + encodeURIComponent(q);
+      }
 
       clearTimeout(searchDebounce);
       searchDebounce = setTimeout(() => {
-        searchSpinner.classList.remove('hidden');
-        searchClear.classList.add('hidden');
+        searchSpinner?.classList.remove('hidden');
+        searchClear?.classList.add('hidden');
 
         fetch('{% url "core:autocomplete" %}?q=' + encodeURIComponent(q))
           .then(r => r.json())
           .then(data => {
-            searchSpinner.classList.add('hidden');
-            searchClear.classList.remove('hidden');
+            searchSpinner?.classList.add('hidden');
+            searchClear?.classList.remove('hidden');
 
-            if (!data.results || data.results.length === 0) {
-              searchInner.innerHTML = `<div class="px-4 py-5 text-center">
-                <p class="text-slate-500 text-sm font-mono">Không tìm thấy kết quả cho "<span class="text-slate-700 dark:text-slate-300">${q}</span>"</p>
-              </div>`;
-              searchResults.classList.remove('hidden');
+            if (!data.results?.length) {
+              if (searchInner) {
+                searchInner.innerHTML = `
+                  <div class="px-4 py-8 text-center">
+                    <p class="text-slate-400 dark:text-slate-500 text-sm font-mono">
+                      Không tìm thấy kết quả cho
+                      <span class="text-slate-700 dark:text-slate-300">"${q}"</span>
+                    </p>
+                  </div>`;
+              }
+              searchResults?.classList.remove('hidden');
               return;
             }
 
@@ -1036,65 +1132,100 @@
             let html = '';
 
             if (products.length) {
-              html += `<div class="px-4 pt-3 pb-1"><p class="font-mono text-[9px] uppercase tracking-[.2em] text-slate-400 dark:text-slate-600">Sản phẩm</p></div>`;
+              html += `
+                <div class="px-4 pt-3 pb-1">
+                  <p class="font-mono text-[9px] uppercase tracking-[.2em]
+                            text-slate-400 dark:text-slate-600">Sản phẩm</p>
+                </div>`;
               products.forEach(item => {
-                html += `<a href="/products/${item.slug}/" class="autocomplete-item group">
-                  <div class="w-7 h-7 rounded-md bg-brand-50 border border-brand-200 dark:bg-brand-950/60 dark:border-brand-800/40 flex items-center justify-center flex-shrink-0">
-                    <svg class="w-3.5 h-3.5 text-brand-600 dark:text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                html += `
+                  <a href="/products/${item.slug}/" class="autocomplete-item group">
+                    <div class="w-7 h-7 rounded-md flex-shrink-0 flex items-center justify-center
+                                bg-brand-50 border border-brand-200
+                                dark:bg-brand-950/60 dark:border-brand-800/40">
+                      <svg class="w-3.5 h-3.5 text-brand-600 dark:text-brand-400"
+                          fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                      </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-medium truncate transition-colors
+                                text-slate-800 group-hover:text-brand-600
+                                dark:text-slate-200 dark:group-hover:text-brand-300">
+                        ${item.label}
+                      </p>
+                      ${item.sku
+                        ? `<p class="text-[11px] font-mono text-slate-400">${item.sku}</p>`
+                        : ''}
+                    </div>
+                    <svg class="w-3.5 h-3.5 flex-shrink-0 transition-colors
+                                text-slate-300 group-hover:text-brand-500
+                                dark:text-slate-700 dark:group-hover:text-brand-400"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                     </svg>
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="text-slate-800 dark:text-slate-200 text-sm font-medium group-hover:text-brand-600 dark:group-hover:text-brand-300 transition-colors truncate">${item.label}</p>
-                    ${item.sku ? `<p class="text-slate-400 text-[11px] font-mono">${item.sku}</p>` : ''}
-                  </div>
-                  <svg class="w-3.5 h-3.5 text-slate-300 dark:text-slate-700 group-hover:text-brand-500 flex-shrink-0 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                  </svg>
-                </a>`;
+                  </a>`;
               });
             }
 
             if (solutions.length) {
-              html += `<div class="px-4 pt-3 pb-1 ${products.length ? 'border-t border-slate-100 dark:border-slate-800' : ''}">
-                <p class="font-mono text-[9px] uppercase tracking-[.2em] text-slate-400 dark:text-slate-600">Giải pháp</p></div>`;
+              html += `
+                <div class="px-4 pt-3 pb-1
+                            ${products.length ? 'border-t border-slate-100 dark:border-slate-800' : ''}">
+                  <p class="font-mono text-[9px] uppercase tracking-[.2em]
+                            text-slate-400 dark:text-slate-600">Giải pháp</p>
+                </div>`;
               solutions.forEach(item => {
-                html += `<a href="/solutions/${item.slug}/" class="autocomplete-item group">
-                  <div class="w-7 h-7 rounded-md bg-emerald-50 border border-emerald-200 dark:bg-emerald-950/60 dark:border-emerald-800/40 flex items-center justify-center flex-shrink-0">
-                    <svg class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+                html += `
+                  <a href="/solutions/${item.slug}/" class="autocomplete-item group">
+                    <div class="w-7 h-7 rounded-md flex-shrink-0 flex items-center justify-center
+                                bg-emerald-50 border border-emerald-200
+                                dark:bg-emerald-950/60 dark:border-emerald-800/40">
+                      <svg class="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400"
+                          fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0
+                                002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+                      </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-medium truncate transition-colors
+                                text-slate-800 group-hover:text-emerald-600
+                                dark:text-slate-200 dark:group-hover:text-emerald-300">
+                        ${item.label}
+                      </p>
+                      <p class="text-[11px] font-mono text-slate-400">Giải pháp</p>
+                    </div>
+                    <svg class="w-3.5 h-3.5 flex-shrink-0 transition-colors
+                                text-slate-300 group-hover:text-emerald-500
+                                dark:text-slate-700 dark:group-hover:text-emerald-400"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
                     </svg>
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <p class="text-slate-800 dark:text-slate-200 text-sm font-medium group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors truncate">${item.label}</p>
-                    <p class="text-slate-400 text-[11px] font-mono">Giải pháp</p>
-                  </div>
-                  <svg class="w-3.5 h-3.5 text-slate-300 dark:text-slate-700 group-hover:text-emerald-500 flex-shrink-0 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
-                  </svg>
-                </a>`;
+                  </a>`;
               });
             }
 
-            searchInner.innerHTML = html;
-            searchResults.classList.remove('hidden');
+            if (searchInner) searchInner.innerHTML = html;
+            searchResults?.classList.remove('hidden');
           })
           .catch(() => {
-            searchSpinner.classList.add('hidden');
-            searchClear.classList.remove('hidden');
+            searchSpinner?.classList.add('hidden');
+            searchClear?.classList.remove('hidden');
           });
-      }, 250);
+      }, 280);
     });
 
     searchClear?.addEventListener('click', () => {
-      searchInput.value = '';
+      if (searchInput) searchInput.value = '';
       searchClear.classList.add('hidden');
-      searchResults.classList.add('hidden');
-      searchInput.focus();
+      searchResults?.classList.add('hidden');
+      searchInput?.focus();
     });
 
 
-    // ─── 5. Cart badge update ────────────────────────────────────────────
+    // ─── 5. Cart badge ────────────────────────────────────────────
     window.updateCartBadge = function (count) {
       const badge = document.getElementById('cart-badge');
       if (!badge) return;
@@ -1109,7 +1240,7 @@
     };
 
 
-    // ─── 6. Scroll reveal ────────────────────────────────────────────────
+    // ─── 6. Scroll reveal ─────────────────────────────────────────
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -1121,11 +1252,12 @@
     }, { threshold: 0.08 });
 
     document.querySelectorAll('[data-reveal]').forEach(el => {
-      el.style.opacity = '0';
+      el.style.opacity    = '0';
       el.style.transition = 'opacity .6s ease, transform .6s ease';
       io.observe(el);
     });
 
+    // Fallback: elements đã trong viewport khi load
     setTimeout(() => {
       document.querySelectorAll('[data-reveal]').forEach(el => {
         if (el.style.opacity === '0') {
@@ -1139,25 +1271,25 @@
     }, 100);
 
 
-    // ─── 7. Auto-dismiss flash messages ──────────────────────────────────
+    // ─── 7. Auto-dismiss flash messages ──────────────────────────
     setTimeout(() => {
       document.querySelectorAll('[role="alert"]').forEach(el => {
         el.style.transition = 'opacity .4s ease';
-        el.style.opacity = '0';
+        el.style.opacity    = '0';
         setTimeout(() => el.remove(), 400);
       });
     }, 4500);
 
 
-    // ─── 8. Active nav highlight ─────────────────────────────────────────
+    // ─── 8. Active nav highlight ──────────────────────────────────
     const currentPath = window.location.pathname;
     document.querySelectorAll('.nav-link').forEach(link => {
       const href = link.getAttribute('href');
-      if (href && href !== '/' && currentPath.startsWith(href)) {
-        link.classList.add('active');
-      } else if (href === '/' && currentPath === '/') {
-        link.classList.add('active');
-      }
+      if (!href) return;
+      const isActive = href === '/'
+        ? currentPath === '/'
+        : currentPath.startsWith(href);
+      if (isActive) link.classList.add('active');
     });
 
   })();
