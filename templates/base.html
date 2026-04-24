@@ -4,14 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  {# Theme initialization — default LIGHT, no system preference #}
-  <script>
-    (function () {
-      const theme = localStorage.getItem('theme') || 'light';
-      document.documentElement.classList.toggle('dark', theme === 'dark');
-    })();
-  </script>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -20,11 +12,10 @@
   <script>
     (function () {
       var saved = localStorage.getItem('theme');
-      // Mặc định dark nếu chưa có lựa chọn
-      if (saved === 'light') {
-        document.documentElement.classList.remove('dark');
-      } else {
+      if (saved === 'dark') {
         document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
       }
     })();
   </script>
