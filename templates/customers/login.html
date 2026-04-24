@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Sign In — {{ COMPANY_NAME }}{% endblock %}
+{% block content %}
+<div class="min-h-[80vh] flex items-center justify-center px-4 py-16">
+  <div class="w-full max-w-md">
+    <div class="text-center mb-8">
+      <div class="w-14 h-14 bg-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-4"><svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg></div>
+      <h1 class="font-display text-3xl font-bold text-slate-900">Welcome back</h1>
+      <p class="text-slate-500 mt-1">Sign in to your account</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+      <form method="post">
+        {% csrf_token %}
+        {% if form.errors %}<div class="bg-red-50 text-red-700 rounded-xl px-4 py-3 text-sm mb-5 border border-red-200">Invalid email or password.</div>{% endif %}
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email</label>
+            <input type="email" name="username" autocomplete="email" required class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-400 transition-colors" placeholder="you@company.com" />
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1.5">Password</label>
+            <input type="password" name="password" autocomplete="current-password" required class="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-brand-400 transition-colors" />
+          </div>
+        </div>
+        <div class="flex items-center justify-between mt-3 mb-6">
+          <label class="flex items-center gap-2 text-sm text-slate-500 cursor-pointer"><input type="checkbox" name="remember_me" class="rounded border-slate-300" /> Remember me</label>
+          <a href="{% url 'customers:password_reset' %}" class="text-brand-600 text-sm hover:text-brand-800">Forgot password?</a>
+        </div>
+        <input type="hidden" name="next" value="{{ next }}" />
+        <button type="submit" class="btn-primary w-full justify-center py-3.5">Sign In</button>
+      </form>
+      <p class="text-center text-sm text-slate-500 mt-5">Don't have an account? <a href="{% url 'customers:register' %}" class="text-brand-600 font-semibold hover:text-brand-800">Register</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

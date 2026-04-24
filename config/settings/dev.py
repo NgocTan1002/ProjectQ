@@ -15,8 +15,8 @@ ALLOWED_HOSTS = ["*"]
 # MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 # INTERNAL_IPS = ["127.0.0.1"]
 
-# Email console trong dev — không cần SMTP thật
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# Email đọc từ .env (base.py) nên không hardcode console ở đây nữa
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-# Ép Celery chạy task đồng bộ, không cần đẩy vào Broker (Redis)
-CELERY_TASK_ALWAYS_EAGER = True
+# # Ép Celery chạy task đồng bộ, không cần đẩy vào Broker (Redis)
+# CELERY_TASK_ALWAYS_EAGER = True
