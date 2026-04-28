@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load humanize %}
+{% load currency %}
 
 {% block title %}{{ COMPANY_NAME }} — Giải pháp IoT & Tự động hoá Công nghiệp{% endblock %}
 {% block meta_description %}Cung cấp thiết bị IoT công nghiệp, cảm biến, gateway, PLC và giải pháp tự động hoá thông minh cho nông nghiệp, nhà máy và quản lý năng lượng.{% endblock %}
@@ -552,7 +552,7 @@
               {% if product.pricing_type == 'fixed' and product.price %}
               <span class="font-mono font-semibold text-sm
                            text-brand-600 dark:text-brand-400">
-                {{ product.price|intcomma }} ₫
+                {{ product.price|vnd }}
               </span>
               {% elif product.pricing_type == 'quote' %}
               <span class="tag tag-amber">Báo giá</span>

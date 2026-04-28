@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load humanize %}
+{% load currency %}
 
 {% block title %}Giỏ hàng — {{ COMPANY_NAME }}{% endblock %}
 
@@ -66,8 +66,8 @@
           {# Price + actions #}
           <div class="flex flex-col items-end gap-3 flex-shrink-0">
             <div class="text-right">
-              <p class="text-xs text-slate-400 dark:text-slate-600 font-mono">{{ item.unit_price|intcomma }} ₫ × {{ item.quantity }}</p>
-              <p class="font-bold text-base text-slate-900 dark:text-white mt-0.5">{{ item.line_total|intcomma }} ₫</p>
+              <p class="text-xs text-slate-400 dark:text-slate-600 font-mono">{{ item.unit_price|vnd }} × {{ item.quantity }}</p>
+              <p class="font-bold text-base text-slate-900 dark:text-white mt-0.5">{{ item.line_total|vnd }}</p>
             </div>
 
             {# Quantity update #}
@@ -127,7 +127,7 @@
           <div class="space-y-3 mb-5">
             <div class="flex items-center justify-between text-sm">
               <span class="text-slate-500 dark:text-slate-400">Tạm tính ({{ total_items }} sản phẩm)</span>
-              <span class="font-semibold text-slate-800 dark:text-slate-200">{{ subtotal|intcomma }} ₫</span>
+              <span class="font-semibold text-slate-800 dark:text-slate-200">{{ subtotal|vnd }}</span>
             </div>
             <div class="flex items-center justify-between text-sm">
               <span class="text-slate-500 dark:text-slate-400">Phí vận chuyển</span>
@@ -138,7 +138,7 @@
           <div class="border-t border-slate-100 dark:border-slate-800 pt-4 mb-6">
             <div class="flex items-center justify-between">
               <span class="font-bold text-slate-900 dark:text-white">Tổng cộng</span>
-              <span class="font-display font-bold text-xl text-brand-600 dark:text-brand-400">{{ subtotal|intcomma }} ₫</span>
+              <span class="font-display font-bold text-xl text-brand-600 dark:text-brand-400">{{ subtotal|vnd }}</span>
             </div>
           </div>
 

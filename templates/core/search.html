@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load humanize %}
+{% load currency %}
 {% block title %}
 {% if query %}Kết quả: "{{ query }}"{% else %}Tìm kiếm{% endif %} — {{ COMPANY_NAME }}
 {% endblock %}
@@ -238,7 +238,7 @@
         <div>
           {% if product.pricing_type == 'fixed' and product.price %}
           <span class="text-brand-600 dark:text-brand-400 font-bold text-sm">
-            {{ product.price|intcomma }} ₫
+            {{ product.price|vnd }}
           </span>
           {% elif product.pricing_type == 'quote' %}
           <span class="text-amber-600 dark:text-amber-400 font-semibold text-xs

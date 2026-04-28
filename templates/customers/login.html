@@ -94,10 +94,7 @@
 
           {# Sửa: dùng password_change thay vì password_reset (không tồn tại) #}
           {# Hoặc comment ra nếu chưa có trang reset password #}
-          {# <a href="{% url 'customers:password_change' %}"
-               class="text-brand-600 dark:text-brand-400 text-sm hover:underline">
-            Quên mật khẩu?
-          </a> #}
+          {# <a href="{% url 'customers:password_change' %}" class="text-brand-600 dark:text-brand-400 text-sm hover:underline"> Quên mật khẩu? </a> #}
         </div>
 
         <input type="hidden" name="next" value="{{ next }}" />

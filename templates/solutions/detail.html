@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load humanize %}
+{% load currency %}
 
 {% block title %}{{ solution.title }} — {{ COMPANY_NAME }}{% endblock %}
 {% block meta_description %}{{ solution.short_description|truncatechars:160 }}{% endblock %}
@@ -475,7 +475,7 @@
             <div>
               {% if product.price %}
               <span class="text-brand-600 dark:text-brand-400 font-bold text-sm">
-                {{ product.price|intcomma }} ₫
+                {{ product.price|vnd }}
               </span>
               {% else %}
               <span class="text-amber-600 dark:text-amber-400 text-xs font-semibold">Báo giá</span>

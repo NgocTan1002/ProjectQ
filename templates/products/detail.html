@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% load humanize %}
+{% load currency %}
 
 {% block title %}{{ product.name }} — {{ COMPANY_NAME }}{% endblock %}
 {% block meta_description %}{{ product.short_description|truncatechars:160 }}{% endblock %}
@@ -20,7 +20,7 @@
     "availability": "{% if product.stock_status == 'in_stock' %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
     {% if product.pricing_type == 'fixed' and product.price %}
     "price": "{{ product.price }}",
-    "priceCurrency": "USD",
+    "priceCurrency": "VND",
     {% endif %}
     "seller": { "@type": "Organization", "name": "{{ COMPANY_NAME }}" }
   }
@@ -202,7 +202,7 @@
             {% if product.pricing_type == 'fixed' and product.price %}
             <p class="text-slate-500 dark:text-slate-500 text-xs font-mono mb-1">Đơn giá</p>
             <p class="text-3xl font-display font-bold text-brand-600 dark:text-brand-400 tracking-tight">
-              ${{ product.price|floatformat:2 }}
+              {{ product.price|vnd }}
             </p>
             {% if product.price_note %}
             <p class="text-slate-400 dark:text-slate-500 text-xs mt-1">{{ product.price_note }}</p>
@@ -615,7 +615,7 @@
           <div class="flex items-center justify-between mb-3">
             <div>
               {% if rp.pricing_type == 'fixed' and rp.price %}
-              <span class="text-brand-600 dark:text-brand-400 font-bold text-sm">${{ rp.price|floatformat:2 }}</span>
+              <span class="text-brand-600 dark:text-brand-400 font-bold text-sm">{{ rp.price|vnd }}</span>
               {% elif rp.pricing_type == 'quote' %}
               <span class="text-amber-600 dark:text-amber-400 text-xs font-semibold">Báo giá</span>
               {% else %}
