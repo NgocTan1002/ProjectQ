@@ -4,6 +4,7 @@ from django.template.loader import render_to_string
 from django.conf import settings
 import logging
 
+
 logger = logging.getLogger(__name__)
 
 @shared_task(bind=True, max_retries=3)

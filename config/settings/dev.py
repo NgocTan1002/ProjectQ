@@ -19,4 +19,4 @@ ALLOWED_HOSTS = ["*"]
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # # Ép Celery chạy task đồng bộ, không cần đẩy vào Broker (Redis)
-# CELERY_TASK_ALWAYS_EAGER = True
+CELERY_TASK_ALWAYS_EAGER = True

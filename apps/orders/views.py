@@ -1,4 +1,3 @@
-"""Orders views - checkout, order confirmation, quote requests."""
 from django.views.generic import TemplateView, DetailView, CreateView, ListView
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
@@ -9,6 +8,8 @@ from .models import Order, OrderItem, QuoteRequest
 from .forms import CheckoutForm, QuoteRequestForm
 from apps.cart.services import CartService
 from apps.products.models import Product
+from apps.contacts.tasks import send_contact_notification
+from apps.orders.tasks import send_quote_notification_email
 
 
 class CheckoutView(TemplateView):
@@ -157,7 +158,7 @@ class QuoteRequestView(CreateView):
         quote = form.save()
         from apps.contacts.tasks import send_contact_notification
         # Reuse contact notification hoặc tạo task riêng sau
-        # send_quote_notification.delay(quote.pk)
+        send_quote_notification_email.delay(quote.pk)
         messages.success(
             self.request,
             f'Yêu cầu báo giá #{quote.reference} đã được gửi. Chúng tôi sẽ liên hệ sớm nhất!'
